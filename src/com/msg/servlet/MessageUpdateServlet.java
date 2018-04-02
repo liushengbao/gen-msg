@@ -1,6 +1,8 @@
 package com.msg.servlet;
 
 import java.io.IOException;
+import java.util.Arrays;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,14 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class MessageLeftShow
  */
-@WebServlet("/MessageLeftServlet")
-public class MessageLeftServlet extends HttpServlet {
+@WebServlet("/update_msg")
+public class MessageUpdateServlet extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MessageLeftServlet() {
+    public MessageUpdateServlet() {
         super();
     }
 
@@ -25,10 +28,9 @@ public class MessageLeftServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setCharacterEncoding("UTF-8");
-		
-		response.getWriter().write("主动广播");
-		
+		request.getParameterMap().entrySet().stream().forEach(e -> {
+			System.out.println(e.getKey() + " " + Arrays.toString(e.getValue()));
+		});
 	}
 
 	/**
