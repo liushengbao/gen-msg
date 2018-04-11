@@ -3,7 +3,6 @@
 <%@ page import="java.util.*"%>
 <!DOCTYPE html>
 <html lang="en">
-<head>
 <meta charset="utf-8">
 <script type="text/javascript" src="style/js/jquery-3.0.0.min.js"></script>
 <link href="style/css/bootstrap.min.css" rel="stylesheet">
@@ -106,22 +105,22 @@
 	%>
 	
 	
-	<div class="container">
+	<div>
 		<form class="form-group" name="msg_form" id="msg_form">
 			<div class="row ">
-				<div class="col-1">
-					<a class="btn btn-secondary" href="#" role="button" href="">添加消息</a>
+				 <div style="display: inline;float: left;margin-left: 20px;">
+					<a class="btn" href="#" role="button" href="">添加消息</a>
 				</div>
-				<div class="col-1">
-					<a class="btn btn-secondary" href="#" role="button" href="">添加广播</a>
+				<div style="display: inline;float: left;">
+					<a class="btn" href="#" role="button" href="">添加广播</a>
 				</div>
-				<div class="col-1">
-					<a class="btn btn-secondary" href="#" role="button" href="">添加结构体</a>
+				<div style="display: inline;float: left;">
+					<a class="btn" href="#" role="button" href="">添加结构体</a>
 				</div>
 			</div>
 
 			<div class="row" style="margin-top: 10px">
-				<div class="col-3">
+				<div style="width: 350px;margin-left: 10px;">
 					<div class="input-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text">消息描述:</span>
@@ -129,13 +128,13 @@
 						<input type="text" id="msg_desc" name="msg_desc" class="form-control" aria-describedby="inputGroup-sizing-sm">
 					</div>
 				</div>
-				<div class="col-4">
+				<div style="width: 250px;margin-left: 20px;">
 					<div class="input-group mb-3">
 						<div class="input-group-prepend">
 							<button class="btn btn-outline-secondary" type="button">消息类型</button>
 						</div>
 						<select name="msg_type" class="custom-select" id="inputGroupSelect03">
-							<option selected>请选择消息类型...</option>
+							<option selected></option>
 							<option value="1">1</option>
 							<option value="2">2</option>
 							<option value="3">3</option>
@@ -145,7 +144,7 @@
 			</div>
 
 			<div class="row">
-				<div class="col-4">
+				<div style="width: 350px;margin-left: 10px;">
 					<div class="input-group mb-3">
 						<div class="input-group-prepend">
 							<span class="input-group-text" id="basic-addon1">请求-消息号:</span>
@@ -153,7 +152,7 @@
 						<input type="text" name="req_id" id= "req_id" class="form-control" aria-describedby="basic-addon1">
 					</div>
 				</div>
-				<div class="col-4">
+				<div style="width: 350px;margin-left: 10px;">
 					<div class="input-group mb-3">
 						<div class="input-group-prepend">
 							<span class="input-group-text" id="basic-addon1">返回-消息号:</span>

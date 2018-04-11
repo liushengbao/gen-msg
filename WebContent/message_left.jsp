@@ -42,22 +42,22 @@
 					<td style="width: 31px; padding: 1px 0px 1px 0;"><a href="">[+]</a></td>
 					<td style="width: 287px; padding: 1px 2px 1px 0;"><a href="">GameStruct</a> <a href="">e</a> <a href="">x</a></td>
 				</tr>
-				
+
 				<tr id="tr" class="hover">
 					<td style="width: 31px; padding: 1px 0px 1px 0;"><a href="">[+]</a></td>
 					<td style="width: 287px; padding: 1px 2px 1px 0;"><a href="">GameStruct</a> <a href="">e</a> <a href="">x</a></td>
 				</tr>
-				
+
 				<tr id="tr" class="hover">
 					<td style="width: 31px; padding: 1px 0px 1px 0;"><a href="">[+]</a></td>
 					<td style="width: 287px; padding: 1px 2px 1px 0;"><a href="">GameStruct</a> <a href="">e</a> <a href="">x</a></td>
 				</tr>
-				
+
 				<tr id="tr" class="hover">
 					<td style="width: 31px; padding: 1px 0px 1px 0;"><a href="">[+]</a></td>
 					<td style="width: 287px; padding: 1px 2px 1px 0;"><a href="">GameStruct</a> <a href="">e</a> <a href="">x</a></td>
 				</tr>
-				
+
 				<tr id="tr" class="hover">
 					<td style="width: 31px; padding: 1px 0px 1px 0;"><a href="">[+]</a></td>
 					<td style="width: 287px; padding: 1px 2px 1px 0;"><a href="">GameStruct</a> <a href="">e</a> <a href="">x</a></td>
