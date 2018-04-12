@@ -47,15 +47,29 @@
 			</thead>
 
 			<!--显示分类数据-->
-			<tbody>
-				<c:forEach items="${CacheMgr.getInstance().getMsgCats().values()}" var="cat">
+			<c:forEach items="${CacheMgr.getInstance().getMsgCats().values()}" var="cat">
+				<tbody>
 					<tr>
 						<td style="width: 31px; padding: 1px 0px 1px 0;"><a href="">[+]</a></td>
 						<td style="width: 287px; padding: 1px 2px 1px 0;"><a href="">${cat.msg_cat}</a>&nbsp<a href="">删除</a></td>
 					</tr>
-				</c:forEach>
-			</tbody>
-
+				</tbody>
+			
+				<tbody id="group_${cat.msg_cat_id}" style="display: none;">
+					<c:forEach items="${CacheMgr.getInstance().getMsgDefs().values()}" var="msg">
+						<tr>
+							<td style="padding:1px 0px 1px 0;">&nbsp;</td>
+							<td colspan="2" style="padding:1px 0px 1px 0;">
+				                <div>
+				                    <a style="width:240px;width:220px;display:block;float:left;" id="" href="javascript:;">${msg.req_id}--${msg.msg_desc}</a>
+				                  
+				                </div>
+	            			</td>
+						</tr>
+					</c:forEach>
+				</tbody>	
+		 </c:forEach>
+		
 		</table>
 
 	</div>

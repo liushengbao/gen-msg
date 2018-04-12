@@ -3,6 +3,7 @@ package com.msg.mgr;
 import java.util.concurrent.ConcurrentHashMap;
 import com.msg.bean.MsgCat;
 import com.msg.bean.MsgDef;
+import com.msg.util.IdHelper;
 
 public class CacheMgr {
 	
@@ -14,10 +15,8 @@ public class CacheMgr {
 	
 	/** 缓存修改的消息定义  **/
 	private ConcurrentHashMap<Integer, MsgDef> modifyMsgDefs = new ConcurrentHashMap<>();
-	
 	/** 消息定义  **/
 	private ConcurrentHashMap<Integer, MsgDef> msgDefs = new ConcurrentHashMap<>();
-	
 	/** 消息类别  **/
 	private ConcurrentHashMap<Integer, MsgCat> msgCats = new ConcurrentHashMap<>();
 	/** 消息类别名字  **/
@@ -26,9 +25,19 @@ public class CacheMgr {
 	/** 初始化  **/
 	public void init() {
 		loadMsgCat();
+		loadMsgDef();
 		
+		IdHelper.setMsgCatId(this.msgCats.keySet().stream().max((a,b) -> Integer.compare(a, b)).orElse(0));
+		IdHelper.setMsgId(this.msgDefs.keySet().stream().max((a,b) -> Integer.compare(a, b)).orElse(0));
 	}
 	
+	/** 载入消息定义 **/
+	public void loadMsgDef() {
+		this.msgDefs.clear();
+		DBMgr.getInstance().loadMsgDefs().forEach(v -> this.msgDefs.put(v.getMsg_id(), v));
+		System.out.println("load msgDefs size:" + this.msgDefs.size());
+	}
+
 	/** 载入类目  **/
 	public void loadMsgCat() {
 		this.msgCats.clear();

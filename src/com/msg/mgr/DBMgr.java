@@ -11,6 +11,7 @@ import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import com.msg.bean.MsgCat;
 import com.msg.bean.MsgDef;
+import com.msg.bean.MsgField;
 import com.msg.util.JsonHelper;
 
 public class DBMgr {
@@ -48,6 +49,11 @@ public class DBMgr {
 		ResultSetHandler<List<MsgDef>> handler = new BeanListHandler<>(MsgDef.class);
 		try {
 			List<MsgDef> list = run.query(conn, "select * from msg_info", handler);
+			list.forEach(v -> {
+				v.setReqBodys(JsonHelper.jsonToArray(v.getReq_body(), MsgField.class));
+				v.setRspBodys(JsonHelper.jsonToArray(v.getRsp_body(), MsgField.class));
+			});
+			
 			return list;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -58,19 +64,28 @@ public class DBMgr {
 	}
 
 	public void updateMsgDefs(List<MsgDef> list) {
-		if (!list.isEmpty()) {
-			Connection conn = getConnection();
-			QueryRunner run = new QueryRunner();
-			try {
-				for (MsgDef msgDef : list) {
-					run.update(conn, "replace into msg_info(req_id,msg_type,msg_desc,req_body,rsp_id,rsp_body) values(?,?,?,?,?,?)", msgDef.getReqId(), 1, msgDef.getMsgDesc(), JsonHelper.toS(msgDef.getReqBodys()), msgDef.getRspId(), JsonHelper.toS(msgDef.getRspBodys()));
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				DbUtils.closeQuietly(conn);
-			}
+		if (list.isEmpty()) {
+			return;
 		}
+		
+		Connection conn = getConnection();
+		QueryRunner run = new QueryRunner();
+		try {
+			for (MsgDef msgDef : list) {
+				if (!CacheMgr.getInstance().getMsgDefs().containsKey(msgDef.getMsg_id())) {
+					run.update(conn, "insert into msg_info(msg_id,msg_cat,msg_desc,req_id,req_body,rsp_id,rsp_body,msg_note) values(?,?,?,?,?,?,?,?)", msgDef.getMsg_id(), msgDef.getMsg_cat(), msgDef.getMsg_desc(), msgDef.getReq_id(), JsonHelper.toS(msgDef.getReqBodys()), msgDef.getRsp_id(), JsonHelper.toS(msgDef.getRspBodys()), msgDef.getMsg_note());
+					CacheMgr.getInstance().getMsgDefs().put(msgDef.getMsg_id(), msgDef);
+				} else {
+					//FIXME 消息更新暂未处理
+					System.out.println("更新暂未处理！！！！");
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DbUtils.closeQuietly(conn);
+		}
+	
 	}
 
 	public void addMsgCat(MsgCat msgCat) {

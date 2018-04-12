@@ -10,6 +10,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import com.msg.bean.MsgCat;
 import com.msg.bean.MsgDef;
+import com.msg.vo.MsgCatItem;
+
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -25,7 +27,7 @@ public class MsgMgr {
 
 	/** 添加修改了的消息定义 **/
 	public void addModifyMsgDef(MsgDef msgDef) {
-		CacheMgr.getInstance().getModifyMsgDefs().put(msgDef.getReqId(), msgDef);
+		CacheMgr.getInstance().getModifyMsgDefs().put(msgDef.getMsg_id(), msgDef);
 	}
 
 	/** 提交修改 **/
@@ -45,16 +47,29 @@ public class MsgMgr {
 
 			for (MsgDef msgDef : list) {
 				Map<String, Object> root = new HashMap<String, Object>();
-
+				// 请求
 				root.put("packageName", "com.shengbao.message");
-				root.put("className", "Msg" + msgDef.getReqId());
+				root.put("className", "Msg" + msgDef.getReq_id());
 				root.put("author", "shengbao");
-				root.put("reqId", msgDef.getReqId());
+				root.put("reqId", msgDef.getReq_id());
 				root.put("fields", msgDef.getReqBodys());
-				
 				Template temp = cfg.getTemplate("JavaMsgTemplate.ftl");
 				Writer out = new OutputStreamWriter(System.out);
 				temp.process(root, out);
+
+				// 返回
+				root.clear();
+				if (msgDef.getRsp_id() > 0) {
+					root.put("packageName", "com.shengbao.message");
+					root.put("className", "Msg" + msgDef.getRsp_id());
+					root.put("author", "shengbao");
+					root.put("reqId", msgDef.getRsp_id());
+					root.put("fields", msgDef.getRspBodys());
+					
+					temp = cfg.getTemplate("JavaMsgTemplate.ftl");
+					out = new OutputStreamWriter(System.out);
+					temp.process(root, out);
+				}
 			}
 
 		} catch (IOException e1) {
@@ -69,6 +84,7 @@ public class MsgMgr {
 	public void saveMsgDefsToDB() {
 		List<MsgDef> list = CacheMgr.getInstance().getModifyMsgDefs().values().stream().collect(Collectors.toList());
 		DBMgr.getInstance().updateMsgDefs(list);
+		CacheMgr.getInstance().getModifyMsgDefs().clear();
 	}
 	
 	public void addCat(MsgCat msgCat) {
@@ -99,4 +115,17 @@ public class MsgMgr {
 		}
 	}
 
+	public List<MsgCatItem> getCatItems() {
+		List<MsgCatItem> collect = CacheMgr.getInstance().getMsgCats().values().stream().map(v -> MsgCatItem.valueOf(v)).collect(Collectors.toList());
+		List<MsgDef> msgDefs = CacheMgr.getInstance().getMsgDefs().values().stream().collect(Collectors.toList());
+		for (MsgCatItem item : collect) {
+			for (MsgDef msgDef : msgDefs) {
+				if (msgDef.getMsg_cat() == item.getMsg_cat_id()) {
+					
+				}
+			}
+		}
+		return collect;
+	}
+	
 }

@@ -35,7 +35,7 @@
 			<div class="col">
 				<p class="text-muted" style="display: inline;">消息号版本:</p>
 				<select id="server_id" name="server_id" style="color: #000000; width: 210px;">
-					<option value="test"></option>
+					<option value="main">main</option>
 				</select> <input type="submit" onclick="" value="确定" class="button">
 			</div>
 		</div>
