@@ -1,7 +1,7 @@
 package com.msg.mgr;
 
 import java.util.concurrent.ConcurrentHashMap;
-
+import com.msg.bean.MsgCat;
 import com.msg.bean.MsgDef;
 
 public class CacheMgr {
@@ -15,8 +15,42 @@ public class CacheMgr {
 	/** 缓存修改的消息定义  **/
 	private ConcurrentHashMap<Integer, MsgDef> modifyMsgDefs = new ConcurrentHashMap<>();
 	
+	/** 消息定义  **/
+	private ConcurrentHashMap<Integer, MsgDef> msgDefs = new ConcurrentHashMap<>();
+	
+	/** 消息类别  **/
+	private ConcurrentHashMap<Integer, MsgCat> msgCats = new ConcurrentHashMap<>();
+	/** 消息类别名字  **/
+	private ConcurrentHashMap<String, Integer> msgCatNames = new ConcurrentHashMap<>();
+	
+	/** 初始化  **/
+	public void init() {
+		loadMsgCat();
+		
+	}
+	
+	/** 载入类目  **/
+	public void loadMsgCat() {
+		this.msgCats.clear();
+		DBMgr.getInstance().getAllMsgCats().forEach(v -> this.msgCats.put(v.getMsg_cat_id(), v));
+		this.msgCats.values().stream().forEach(v -> this.msgCatNames.put(v.getMsg_cat(), v.getMsg_cat_id()));
+		System.out.println("load msgCats size:" + this.msgCats.size());
+	}
+	
 	public ConcurrentHashMap<Integer, MsgDef> getModifyMsgDefs() {
 		return modifyMsgDefs;
 	}
 
+	public ConcurrentHashMap<Integer, MsgDef> getMsgDefs() {
+		return msgDefs;
+	}
+
+	public ConcurrentHashMap<Integer, MsgCat> getMsgCats() {
+		return msgCats;
+	}
+	
+	public ConcurrentHashMap<String, Integer> getMsgCatNames() {
+		return msgCatNames;
+	}
+	
 }

@@ -105,7 +105,7 @@
 	%>
 	
 	
-	<div>
+	<div style="margin-left: 20px;width: 700px;">
 		<form class="form-group" name="msg_form" id="msg_form">
 			<div class="row ">
 				 <div style="display: inline;float: left;margin-left: 20px;">
@@ -128,10 +128,10 @@
 						<input type="text" id="msg_desc" name="msg_desc" class="form-control" aria-describedby="inputGroup-sizing-sm">
 					</div>
 				</div>
-				<div style="width: 250px;margin-left: 20px;">
+				<div style="width: 350px;margin-left: 10px;">
 					<div class="input-group mb-3">
 						<div class="input-group-prepend">
-							<button class="btn btn-outline-secondary" type="button">消息类型</button>
+							<button class="btn btn-outline-secondary" type="button">消息归类</button>
 						</div>
 						<select name="msg_type" class="custom-select" id="inputGroupSelect03">
 							<option selected></option>
@@ -163,7 +163,7 @@
 			</div>
 
 			<div class="row">
-				<div class="col-8">
+				<div style="width: 710px;margin-left: 10px;">
 					<div class="form-group">
 						<label for="exampleFormControlTextarea1">备注:</label>
 						<textarea name="bz" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
@@ -188,7 +188,7 @@
 			</div>
 
 			<div class="row">
-				<div class="col-8">
+				<div style="width: 710px;margin-left: 10px;">
 					<div class="alert alert-secondary" role="alert">
 						<label>请求-消息体</label>
 					</div>
@@ -202,7 +202,7 @@
 			</div>
 
 			<div class="row" style="margin-top: 15px">
-				<div class="col-8">
+				<div style="width: 710px;margin-left: 10px;">
 					<div class="alert alert-secondary" role="alert">
 						<label>返回-消息体</label>
 					</div>

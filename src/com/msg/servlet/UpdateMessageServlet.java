@@ -14,11 +14,12 @@ import com.msg.util.JsonHelper;
 
 /**
  * 添加修改消息
+ * @author shengbao
  */
+@SuppressWarnings("serial")
 @WebServlet("/update_msg")
 public class UpdateMessageServlet extends HttpServlet {
 
-	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()

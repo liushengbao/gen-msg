@@ -9,6 +9,7 @@ import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import com.msg.bean.MsgCat;
 import com.msg.bean.MsgDef;
 import com.msg.util.JsonHelper;
 
@@ -70,6 +71,34 @@ public class DBMgr {
 				DbUtils.closeQuietly(conn);
 			}
 		}
+	}
+
+	public void addMsgCat(MsgCat msgCat) {
+		if (msgCat != null) {
+			Connection conn = getConnection();
+			QueryRunner run = new QueryRunner();
+			try {
+				run.update(conn, "insert into msg_cat(msg_cat_id,msg_cat,msg_cat_type) values(?,?,?)", msgCat.getMsg_cat_id(), msgCat.getMsg_cat(), msgCat.getMsg_cat_type());
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				DbUtils.closeQuietly(conn);
+			}
+		}
+	}
+
+	public List<MsgCat> getAllMsgCats() {
+		Connection conn = getConnection();
+		QueryRunner run = new QueryRunner();
+		try {
+			List<MsgCat> list = run.query(conn, "select * from msg_cat", new BeanListHandler<>(MsgCat.class));
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DbUtils.closeQuietly(conn);
+		}
+		return Collections.emptyList();
 	}
 
 }

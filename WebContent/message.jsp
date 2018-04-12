@@ -13,6 +13,12 @@
 	function add_msg() {
 		$("#msg_edit").load("add_message.jsp");
 	}
+	
+	/* 添加分类  */
+	function add_cat() {
+		$("#msg_edit").load("add_cat.jsp");
+	}
+	
 </script>
 
 <body>
@@ -20,6 +26,7 @@
 		<div class="row">
 			<div class="col" style="font-size: 16px">
 				<p class="text-muted" style="display: inline;">消息号管理</p>
+				<a href="javascript:;" onclick="add_cat()" style="margin-left: 5px">添加分类</a> 
 				<a href="javascript:;" onclick="add_msg()" style="margin-left: 5px">添加消息号</a>
 			</div>
 		</div>
@@ -39,14 +46,15 @@
 				<input type="text"> <input type="submit" onclick="" value="搜索" class="button">
 			</div>
 		</div>
-		
 
-		<div style="float: left; width: 360px;height: 1000px;">
+		<!-- 消息类目显示  -->
+		<div style="float: left; width: 360px; height: 1000px;">
 			<jsp:include page="message_left.jsp" flush="true" />
 		</div>
 
 		<!-- 消息编辑区域 -->
-		<div id="msg_edit" class="msg_edit"></div>
+		<div id="msg_edit" class="msg_edit" style="float: left;"></div>
+
 
 
 	</div>

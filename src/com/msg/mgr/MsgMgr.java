@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import com.msg.bean.MsgCat;
 import com.msg.bean.MsgDef;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -69,6 +70,13 @@ public class MsgMgr {
 		List<MsgDef> list = CacheMgr.getInstance().getModifyMsgDefs().values().stream().collect(Collectors.toList());
 		DBMgr.getInstance().updateMsgDefs(list);
 	}
+	
+	public void addCat(MsgCat msgCat) {
+		if (!CacheMgr.getInstance().getMsgCatNames().containsKey(msgCat.getMsg_cat())) {
+			DBMgr.getInstance().addMsgCat(msgCat);
+			CacheMgr.getInstance().loadMsgCat();
+		}
+	}
 
 	public static void main(String[] args) {
 		Configuration cfg = new Configuration(Configuration.VERSION_2_3_22);
@@ -89,7 +97,6 @@ public class MsgMgr {
 		} catch (TemplateException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 }
