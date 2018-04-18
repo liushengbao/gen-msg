@@ -19,6 +19,11 @@
 		$("#msg_edit").load("add_cat.jsp");
 	}
 	
+	/* 编辑消息  */
+	function edit_msg($req_id) {
+		$("#msg_edit").load("edit_message.jsp", {req_id:$req_id});
+	}
+	
 </script>
 
 <body>

@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 import com.msg.bean.MsgCat;
 import com.msg.bean.MsgDef;
 import com.msg.vo.MsgCatItem;
-
+import com.msg.vo.MsgItem;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -121,11 +121,19 @@ public class MsgMgr {
 		for (MsgCatItem item : collect) {
 			for (MsgDef msgDef : msgDefs) {
 				if (msgDef.getMsg_cat() == item.getMsg_cat_id()) {
-					
+					item.getItems().add(MsgItem.valueOf(msgDef));
 				}
 			}
 		}
 		return collect;
+	}
+	
+	public MsgItem getMsgItem(final int msgId) {
+		MsgDef msgDef = CacheMgr.getInstance().getMsgDefs().values().stream().filter(v -> v.getMsg_id() == msgId).findFirst().orElse(null);
+		if (msgDef != null) {
+			return MsgItem.valueOf(msgDef);
+		}
+		return null;
 	}
 	
 }
