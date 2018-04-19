@@ -18,6 +18,18 @@
 			var arr = a_id.split('_');
             var t = "#group_msg_"+arr[1];
             $(t).toggle();
+            var h = "#h_"+arr[1];
+            $(h).show();
+            $(this).hide();
+		});	
+		$(".msg_hide").click(function() {
+			var a_id=$(this).attr("id");
+			var arr = a_id.split('_');
+            var t = "#group_msg_"+arr[1];
+            $(t).toggle();
+            var h = "#a_"+arr[1];
+            $(h).show();
+            $(this).hide();
 		});		
 	});
 </script>
@@ -36,8 +48,8 @@
 			<c:forEach items="${MsgMgr.getInstance().getCatItems()}" var="cat">
 				<tbody id="group_${cat.msg_cat_id}">
 					<tr>
-						<td style="width: 31px; padding: 1px 0px 1px 0;"><a href="javascript:;" id="a_${cat.msg_cat_id}" class="msg_show">[+]</a></td>
-						<td style="width: 287px; padding: 1px 2px 1px 0;"><a href="javascript:;">${cat.msg_cat}</a>&nbsp<a href="">删除</a></td>
+						<td style="width: 31px; padding: 1px 0px 1px 0;"><a href="javascript:;" id="a_${cat.msg_cat_id}" class="msg_show">[+]</a><a href="javascript:;" id="h_${cat.msg_cat_id}" class="msg_hide" style="display: none;">[ - ]</a></td>
+						<td style="width: 287px; padding: 1px 2px 1px 0;"><a href="javascript:;">${cat.msg_cat}</a>--${cat.firstMsgName}&nbsp<a href="">删除</a></td>
 					</tr>
 				</tbody>
 			

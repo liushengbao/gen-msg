@@ -117,12 +117,18 @@ public class MsgMgr {
 
 	public List<MsgCatItem> getCatItems() {
 		List<MsgCatItem> collect = CacheMgr.getInstance().getMsgCats().values().stream().map(v -> MsgCatItem.valueOf(v)).collect(Collectors.toList());
-		List<MsgDef> msgDefs = CacheMgr.getInstance().getMsgDefs().values().stream().collect(Collectors.toList());
+		List<MsgDef> msgDefs = CacheMgr.getInstance().getMsgDefs().values().stream().sorted((a,b) -> Integer.compare(a.getReq_id(), b.getReq_id())).collect(Collectors.toList());
 		for (MsgCatItem item : collect) {
+			boolean firstName = false;
 			for (MsgDef msgDef : msgDefs) {
 				if (msgDef.getMsg_cat() == item.getMsg_cat_id()) {
 					item.getItems().add(MsgItem.valueOf(msgDef));
+					if (!firstName) {
+						item.setFirstMsgName(String.valueOf(msgDef.getReq_id()));
+						firstName = true;
+					}
 				}
+				
 			}
 		}
 		return collect;

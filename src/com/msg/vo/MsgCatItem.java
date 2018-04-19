@@ -9,7 +9,8 @@ public class MsgCatItem {
 	private int msg_cat_id;
 	private String msg_cat;
 	private int msg_cat_type;
-
+	/** 首消息名字 **/
+	private String firstMsgName;
 	private List<MsgItem> items = new ArrayList<>();
 
 	public List<MsgItem> getItems() {
@@ -44,6 +45,14 @@ public class MsgCatItem {
 		this.msg_cat_type = msg_cat_type;
 	}
 	
+	public String getFirstMsgName() {
+		return firstMsgName;
+	}
+
+	public void setFirstMsgName(String firstMsgName) {
+		this.firstMsgName = firstMsgName;
+	}
+
 	public static MsgCatItem valueOf(MsgCat cat) {
 		MsgCatItem catItem = new MsgCatItem();
 		catItem.setMsg_cat_id(cat.getMsg_cat_id());
