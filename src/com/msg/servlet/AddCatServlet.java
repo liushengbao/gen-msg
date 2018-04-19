@@ -33,8 +33,8 @@ public class AddCatServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String catName = HttpHelpler.getParameterValue(request, "cat_name");
-		String catType = HttpHelpler.getParameterValue(request, "cat_type");
+		String catName = HttpHelpler.getParameter(request, "cat_name");
+		String catType = HttpHelpler.getParameter(request, "cat_type");
 		MsgCat msgCat = new MsgCat();
 		msgCat.setMsg_cat_id(IdHelper.genMsgCatId());
 		msgCat.setMsg_cat(catName);

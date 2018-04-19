@@ -54,14 +54,27 @@
 		// 添加请求字段
 		var rc = 0;
 		$("#add_req_btn").click(function() {
+			 $("input.req_f_type").each(function(){
+				 var id=$(this).attr("id");
+				 if (rc < id) {
+					 rc = id;
+				 }
+			 });
 			rc++;
-			$(".req-body").append('<label>类型:</label><input name="req_f_type_'+rc+'" type="text" value="" id="'+ rc + '"/> <label>变量名:</label><input name="req_f_name_'+rc+'" type="text" value="" /> <label>描述:</label><input name="req_f_desc_'+rc+'" type="text" value="" /> <br/>');					
+			$(".req-body").append('<label>类型:</label><input name="req_f_type_'+rc+'" type="text" value="" id="'+ rc + '" class="req_f_type"/> <label>变量名:</label><input name="req_f_name_'+rc+'" type="text" value="" /> <label>描述:</label><input name="req_f_desc_'+rc+'" type="text" value="" /> <br/>');					
 		});
+	
 		// 添加返回字段
 		var rc2 = 0;
 		$("#add_rsp_btn").click(function() {
+			$("input.rsp_f_type").each(function(){
+				 var id=$(this).attr("id");
+				 if (rc2 < id) {
+					 rc2 = id;
+				 }
+			 });
 			rc2++;
-			$(".rsp-body").append('<label>类型:</label><input name="rsp_f_type_'+rc2+'" type="text" value="" id="'+ rc2 + '"/> <label>变量名:</label><input name="rsp_f_name_'+rc2+'" type="text" value="" /> <label>描述:</label><input name="rsp_f_desc_'+rc2+'" type="text" value="" /> <br/>');
+			$(".rsp-body").append('<label>类型:</label><input name="rsp_f_type_'+rc2+'" type="text" value="" id="'+ rc2 + '" class="rsp_f_type"/> <label>变量名:</label><input name="rsp_f_name_'+rc2+'" type="text" value="" /> <label>描述:</label><input name="rsp_f_desc_'+rc2+'" type="text" value="" /> <br/>');
 		});
 
 		/** 消息号输入框改变事件  **/
@@ -108,6 +121,7 @@
 	
 	<div style="margin-left: 20px; width: 700px;">
 		<form class="form-group" name="msg_form" id="msg_form">
+			<input type="hidden" name="msg_id" value="${msgItem.msg_id}">
 			<div class="row" style="margin-top: 10px">
 				<div style="width: 350px; margin-left: 10px;">
 					<div class="input-group">
@@ -127,7 +141,7 @@
 						</div>
 						<select name="msg_cat" class="custom-select" id="inputGroupSelect03">
 							<c:if test="${msgItem != null}">
-								<option selected="${msgItem.msg_cat}">${msgItem.msg_cat_name}</option>
+								<option selected="${msgItem.msg_cat}" value="${msgItem.msg_cat}">${msgItem.msg_cat_name}</option>
 							</c:if>
 							<c:forEach items="${CacheMgr.getInstance().getMsgCats().values()}" var="cat">
 								<option value="${cat.msg_cat_id}">${cat.msg_cat}</option>
@@ -176,7 +190,7 @@
 					<tbody class="req-body">
 						<c:if test="${msgItem != null}">
 							<c:forEach items="${msgItem.reqFields}" var="field">
-								<label>类型:</label><input name="req_f_type_${field.id}" type="text" value="${field.ft}" id="${field.id}"/> <label>变量名:</label><input name="req_f_name_${field.id}" type="text" value="${field.fn}" /> <label>描述:</label><input name="req_f_desc_${field.id}" type="text" value="${field.desc}" /> <br/>
+								<label>类型:</label><input name="req_f_type_${field.id}" type="text" value="${field.ft}" id="${field.id}" class="req_f_type"/> <label>变量名:</label><input name="req_f_name_${field.id}" type="text" value="${field.fn}" /> <label>描述:</label><input name="req_f_desc_${field.id}" type="text" value="${field.desc}" /> <br/>
 							</c:forEach>
 						</c:if>
 					</tbody>
@@ -211,7 +225,7 @@
 					<tbody class="rsp-body">
 						<c:if test="${msgItem != null}">
 							<c:forEach items="${msgItem.reqFields}" var="field">
-								<label>类型:</label><input name="rsp_f_type_${field.id}" type="text" value="${field.ft}" id="${field.id}"/> <label>变量名:</label><input name="rsp_f_name_${field.id}" type="text" value="${field.fn}" /> <label>描述:</label><input name="rsp_f_desc_${field.id}" type="text" value="${field.desc}" /> <br/>
+								<label>类型:</label><input name="rsp_f_type_${field.id}" type="text" value="${field.ft}" id="${field.id}" class="req_f_type"/> <label>变量名:</label><input name="rsp_f_name_${field.id}" type="text" value="${field.fn}" /> <label>描述:</label><input name="rsp_f_desc_${field.id}" type="text" value="${field.desc}" /> <br/>
 							</c:forEach>
 						</c:if>
 					</tbody>
