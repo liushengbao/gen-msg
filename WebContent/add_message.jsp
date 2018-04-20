@@ -63,11 +63,11 @@
 	
 	/** 提交模态框 **/
 	$('#edit_f_ok').click(function() {
-			var v1 = $('#edit_field_type').val();
-			var v2 = $('#edit_field_key').val();
-			var v3 = $('#edit_field_value').val();
-			var v4 = $('#edit_field_name').val();
-			var v5 = $('#edit_field_desc').val();
+		var v1 = $('#edit_field_type').val();
+		var v2 = $('#edit_field_key').val();
+		var v3 = $('#edit_field_value').val();
+		var v4 = $('#edit_field_name').val();
+		var v5 = $('#edit_field_desc').val();
 		if (is_edit_req) {
 			if (v1 == "base") {
 				$("#req_f_type_show_" + last_edit_rc).val(v3);
