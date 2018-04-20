@@ -1,23 +1,19 @@
-package com.msg.vo;
+package com.msg.bean;
 
-import com.msg.bean.MsgField;
-import com.msg.mgr.MsgMgr;
-
-/**
-  * @author shengbao.Liu
-  * @date 2018年4月18日 下午9:02:40
-  * 
-  */
-public class MsgFieldItem {
+public class WriteField {
 	/** 字段排序id **/
 	private int id;
 	/** 描述 **/
 	private String desc;
 	/** 字段类型 **/
 	private String ft;
+	private String ft_java;
+	/** 字段类型key **/
 	private String fk;
+	private String fk_jav;
+	/** 字段类型value **/
 	private String fv;
-	private String fs;
+	private String fv_java;
 	/** 字段名称 **/
 	private String fn;
 
@@ -52,7 +48,7 @@ public class MsgFieldItem {
 	public void setFn(String fn) {
 		this.fn = fn;
 	}
-	
+
 	public String getFk() {
 		return fk;
 	}
@@ -68,25 +64,38 @@ public class MsgFieldItem {
 	public void setFv(String fv) {
 		this.fv = fv;
 	}
-
-	public String getFs() {
-		return fs;
-	}
-
-	public void setFs(String fs) {
-		this.fs = fs;
-	}
 	
-	public static MsgFieldItem valueOf(MsgField v) {
-		MsgFieldItem item  = new MsgFieldItem();
-		item.setId(v.getId());
-		item.setFt(v.getFt());
-		item.setFk(v.getFk());
-		item.setFv(v.getFv());
-		item.setFn(v.getFn());
-		item.setDesc(v.getDesc());
-		item.setFs(MsgMgr.getInstance().getFieldTypeShowStr(v));
-		return item;
+	public String getFt_java() {
+		return ft_java;
 	}
-	
+
+	public void setFt_java(String ft_java) {
+		this.ft_java = ft_java;
+	}
+
+	public String getFk_jav() {
+		return fk_jav;
+	}
+
+	public void setFk_jav(String fk_jav) {
+		this.fk_jav = fk_jav;
+	}
+
+	public String getFv_java() {
+		return fv_java;
+	}
+
+	public void setFv_java(String fv_java) {
+		this.fv_java = fv_java;
+	}
+
+	public static WriteField valueOf(MsgField field) {
+		WriteField f = new WriteField();
+		f.setDesc(field.getDesc());
+		f.setFn(field.getFn());
+		f.setFt(field.getFt());
+		f.setFk(field.getFk());
+		f.setFv(field.getFv());
+		return f;
+	}
 }

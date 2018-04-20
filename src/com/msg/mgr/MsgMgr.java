@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import com.msg.bean.MsgCat;
 import com.msg.bean.MsgDef;
+import com.msg.bean.MsgField;
 import com.msg.vo.MsgCatItem;
 import com.msg.vo.MsgItem;
 import freemarker.template.Configuration;
@@ -33,8 +34,10 @@ public class MsgMgr {
 	/** 提交修改 **/
 	public void submit() {
 		writeFiles();
-		saveMsgDefsToDB();
+//		saveMsgDefsToDB();//FIXME 屏蔽写入数据库
 	}
+	
+	
 
 	/** 写入文件 >> 例如Msg1010101.java **/
 	public void writeFiles() {
@@ -140,6 +143,16 @@ public class MsgMgr {
 			return MsgItem.valueOf(msgDef);
 		}
 		return null;
+	}
+	
+	public String getFieldTypeShowStr(MsgField field) {
+		if (field.getFt().equals("array")) {
+			return field.getFt() + "<" + field.getFv() + ">";
+		} else if (field.getFt().equals("map")) {
+			return field.getFt() + "<" + field.getFk() + "," + field.getFv() + ">";
+		} else {
+			return field.getFv();
+		}
 	}
 	
 }

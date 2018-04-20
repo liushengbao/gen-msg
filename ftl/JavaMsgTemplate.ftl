@@ -8,7 +8,27 @@ import java.util.List;
 public class ${className} extends AbstractMsgPacket {
   	
   <#list fields as field> 
-    private ${field.ft} ${field.fn};
+  	<#if field.ft == "base">
+  		<#if field.fv == "int8">
+    private byte ${field.fn};
+		<#elseif field.fv == "int16">
+    private short ${field.fn};		
+		<#elseif field.fv == "int32">
+	private int ${field.fn};
+		<#elseif field.fv == "long">
+	private short ${field.fn};
+		<#elseif field.fv == "string">
+	private String ${field.fn};
+		<#else>
+	private ${field.fv} ${field.fn} = new ${field.fv}();
+  		</#if>
+    </#if>
+    <#if field.ft == "array">
+    private List<${field.fv}> ${field.fn} = new ArrayList<>();
+    </#if>
+    <#if field.ft == "map">
+    private Map<${field.fk},${field.fv}> ${field.fn} = new HashMap<>();
+    </#if>
   </#list>
     
     public static ${className} Create() {

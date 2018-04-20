@@ -16,7 +16,7 @@ import com.msg.util.JsonHelper;
 /**
  * 添加修改消息
  * 
- * @author shengbao
+ * @author shengbao.Liu
  */
 @SuppressWarnings("serial")
 @WebServlet("/update_msg")
@@ -30,11 +30,12 @@ public class UpdateMessageServlet extends HttpServlet {
 	}
 
 	/**
+	 * 处理消息
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int reqFieldCount = (int) request.getParameterMap().keySet().stream().filter(k -> k.startsWith("req_f_type")).count();
-		int rspFieldCount = (int) request.getParameterMap().keySet().stream().filter(k -> k.startsWith("rsp_f_type")).count();
+		int reqFieldCount = (int) request.getParameterMap().keySet().stream().filter(k -> k.startsWith("req_f_name")).count();
+		int rspFieldCount = (int) request.getParameterMap().keySet().stream().filter(k -> k.startsWith("req_f_name")).count();
 		String reqId = HttpHelpler.getParameter(request, "req_id");
 		if (reqId == "") {
 			return;
@@ -47,7 +48,7 @@ public class UpdateMessageServlet extends HttpServlet {
 			// 旧的消息id
 			msgDef.setMsg_id(msgId);
 		} else {
-			//消息id
+			// 新消息
 			msgDef.setMsg_id(IdHelper.genMsgId());
 		}
 		//消息分类
@@ -58,10 +59,14 @@ public class UpdateMessageServlet extends HttpServlet {
 		for (int i = 1; i <= reqFieldCount; i++) {
 			MsgField msgField = new MsgField();
 			String rft = HttpHelpler.getParameter(request, "req_f_type_" + i);
+			String rfk = HttpHelpler.getParameter(request, "req_f_key_" + i);
+			String rfv = HttpHelpler.getParameter(request, "req_f_value_" + i);
 			String rfn = HttpHelpler.getParameter(request, "req_f_name_" + i);
 			String rfd = HttpHelpler.getParameter(request, "req_f_desc_" + i);
 			msgField.setId(i);
 			msgField.setFt(rft);
+			msgField.setFk(rfk);
+			msgField.setFv(rfv);
 			msgField.setFn(rfn);
 			msgField.setDesc(rfd);
 			msgDef.getReqBodys().add(msgField);
@@ -73,19 +78,23 @@ public class UpdateMessageServlet extends HttpServlet {
 		for (int i = 1; i <= rspFieldCount; i++) {
 			MsgField msgField = new MsgField();
 			String rft = HttpHelpler.getParameter(request, "rsp_f_type_" + i);
+			String rfk = HttpHelpler.getParameter(request, "rsp_f_key_" + i);
+			String rfv = HttpHelpler.getParameter(request, "rsp_f_value_" + i);
 			String rfn = HttpHelpler.getParameter(request, "rsp_f_name_" + i);
 			String rfd = HttpHelpler.getParameter(request, "rsp_f_desc_" + i);
 			msgField.setId(i);
 			msgField.setFt(rft);
+			msgField.setFk(rfk);
+			msgField.setFv(rfv);
 			msgField.setFn(rfn);
 			msgField.setDesc(rfd);
 			msgDef.getRspBodys().add(msgField);
 		}
 		// 备注
 		msgDef.setMsg_note(HttpHelpler.getParameter(request, "msg_note"));
-		System.out.println(JsonHelper.toS(msgDef));// TODO syso
-		// MsgMgr.getInstance().addModifyMsgDef(msgDef);
-		// MsgMgr.getInstance().submit();// FIXME 这里为了测试先每次都提交
+		MsgMgr.getInstance().addModifyMsgDef(msgDef);
+		MsgMgr.getInstance().submit();// FIXME 这里为了测试先每次都提交
+//		System.out.println(JsonHelper.toS(msgDef));// TODO syso
 	}
 
 	/**

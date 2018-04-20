@@ -70,24 +70,33 @@
 			var v5 = $('#edit_field_desc').val();
 		if (is_edit_req) {
 			if (v1 == "base") {
-				$("#req_f_type_" + last_edit_rc).val(v3);
+				$("#req_f_type_show_" + last_edit_rc).val(v3);
 			} else if (v1 == "array") {
-				$("#req_f_type_" + last_edit_rc).val(v1 + "<" +v3+ ">");
+				$("#req_f_type_show_" + last_edit_rc).val(v1 + "<" +v3+ ">");
 			} else if (v1 == "map") {
-				$("#req_f_type_" + last_edit_rc).val(v1 + "<" +v2+","+v3+ ">");
+				$("#req_f_type_show_" + last_edit_rc).val(v1 + "<" +v2+","+v3+ ">");
 			}
 			$("#req_f_name_" + last_edit_rc).val(v4);
 			$("#req_f_desc_" + last_edit_rc).val(v5);
+			$("#req_f_type_" + last_edit_rc).val(v1);
+			$("#req_f_key_" + last_edit_rc).val(v2);
+			$("#req_f_value_" + last_edit_rc).val(v3);
+			
 		} else {
 			if (v1 == "base") {
-				$("#rsp_f_type_" + last_edit_rc).val(v3);
+				$("#rsp_f_type_show_" + last_edit_rc).val(v3);
 			} else if (v1 == "array") {
-				$("#rsp_f_type_" + last_edit_rc).val(v1 + "<" +v3+ ">");
+				$("#rsp_f_type_show_" + last_edit_rc).val(v1 + "<" +v3+ ">");
 			} else if (v1 == "map") {
-				$("#rsp_f_type_" + last_edit_rc).val(v1 + "<" +v2+","+v3+ ">");
+				$("#rsp_f_type_show_" + last_edit_rc).val(v1 + "<" +v2+","+v3+ ">");
 			}
 			$("#rsp_f_name_" + last_edit_rc).val(v4);
 			$("#rsp_f_desc_" + last_edit_rc).val(v5);
+			$("#rsp_f_name_" + last_edit_rc).val(v4);
+			$("#rsp_f_desc_" + last_edit_rc).val(v5);
+			$("#rsp_f_type_" + last_edit_rc).val(v1);
+			$("#rsp_f_key_" + last_edit_rc).val(v2);
+			$("#rsp_f_value_" + last_edit_rc).val(v3);
 		}
 	});
 	
@@ -103,13 +112,13 @@
 		var rc = 0;
 		$("#add_req_btn").click(function() {
 			rc++;
-			$(".req-body").append('<label>类型:</label><input class="req_f_type" name="req_f_type_'+rc+'" type="text" value="" id="req_f_type_'+ rc + '" onfocus="focus_edit_req('+rc+')" data-toggle="modal" data-target="#exampleModal"/> <label>变量名:</label><input name="req_f_name_'+rc+'" type="text" value="" id="req_f_name_'+rc+'" /> <label>描述:</label><input id="req_f_desc_'+rc+'" name="req_f_desc_'+rc+'" type="text" value="" /> <br/>');
+			$(".req-body").append('<input type="text" style="display:none;" id="req_f_key_'+ rc + '" name="req_f_key_'+ rc + '"><input type="text" style="display:none;" id="req_f_value_'+ rc + '" name="req_f_value_'+ rc + '"> <input type="text" style="display:none;" id="req_f_type_'+ rc + '" name="req_f_type_'+ rc + '"><label>类型:</label><input class="req_f_type_show" name="req_f_type_show_'+rc+'" type="text" value="" id="req_f_type_show_'+ rc + '" onfocus="focus_edit_req('+rc+')" data-toggle="modal" data-target="#exampleModal"/> <label>变量名:</label><input name="req_f_name_'+rc+'" type="text" value="" id="req_f_name_'+rc+'" /> <label>描述:</label><input id="req_f_desc_'+rc+'" name="req_f_desc_'+rc+'" type="text" value="" /> <br/>');
 		});
 		// 添加返回字段
 		var rc2 = 0;
 		$("#add_rsp_btn").click(function() {
 			rc2++;
-			$(".rsp-body").append('<label>类型:</label><input name="rsp_f_type_'+rc2+'" type="text" value="" id="rsp_f_type_'+ rc + '" class="rsp_f_type" onfocus="focus_edit_rsp('+rc+')" data-toggle="modal" data-target="#exampleModal"/> <label>变量名:</label><input name="rsp_f_name_'+rc2+'" type="text" value="" id="rsp_f_name_'+rc+'"/> <label>描述:</label><input id="rsp_f_desc_'+rc+'" name="rsp_f_desc_'+rc2+'" type="text" value="" /> <br/>');
+			$(".rsp-body").append('<input type="text" style="display:none;" id="rsp_f_key_'+ rc2 + '" name="rsp_f_key_'+ rc2 + '"><input type="text" style="display:none;" id="rsp_f_value_'+ rc2 + '" name="rsp_f_value_'+ rc2 + '"> <input type="text" style="display:none;" id="rsp_f_type_'+ rc2 + '" name="rsp_f_type_'+ rc2 + '"><label>类型:</label><input name="rsp_f_type_show_'+rc2+'" type="text" value="" id="rsp_f_type_show_'+ rc2 + '" class="rsp_f_type_show_" onfocus="focus_edit_rsp('+rc2+')" data-toggle="modal" data-target="#exampleModal"/> <label>变量名:</label><input name="rsp_f_name_'+rc2+'" type="text" value="" id="rsp_f_name_'+rc2+'"/> <label>描述:</label><input id="rsp_f_desc_'+rc2+'" name="rsp_f_desc_'+rc2+'" type="text" value="" /> <br/>');
 		});
 
 		/** 消息号输入框改变事件  **/
@@ -142,8 +151,8 @@
 			}
 		});	
 		
-		
 	});
+	
 </script>
 </head>
 
