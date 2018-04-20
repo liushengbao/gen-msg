@@ -24,6 +24,7 @@
 		$("#msg_edit").load("edit_message.jsp", {req_id:$req_id});
 	}
 	
+	
 </script>
 
 <body>
@@ -33,22 +34,26 @@
 				<p class="text-muted" style="display: inline;">消息号管理</p>
 				<a href="javascript:;" onclick="add_cat()" style="margin-left: 5px">添加分类</a> 
 				<a href="javascript:;" onclick="add_msg()" style="margin-left: 5px">添加消息号</a>
+				<a href="javascript:;" onclick="" style="margin-left: 5px">添加结构体</a>
+				<a href="javascript:;" onclick="" style="margin-left: 5px">添加广播</a>
 			</div>
 		</div>
 
-		<div class="row">
+		<div class="row" style="margin-top: 5px;">
 			<div class="col">
 				<p class="text-muted" style="display: inline;">消息号版本:</p>
-				<select id="server_id" name="server_id" style="color: #000000; width: 210px;">
+				<select id="server_id" name="server_id" style="color: #000000; width: 200px;">
 					<option value="main">main</option>
-				</select> <input type="submit" onclick="" value="确定" class="button">
+				</select>
+				<button type="button" class="btn btn-secondary btn-sm">确定</button>
 			</div>
 		</div>
 
-		<div class="row">
+		<div class="row" style="margin-top: 5px;">
 			<div class="col">
 				<p class="text-muted" style="display: inline;">消息号搜索:</p>
-				<input type="text"> <input type="submit" onclick="" value="搜索" class="button">
+				<input type="text" style="width: 200px;"> 
+				<button type="button" class="btn btn-secondary btn-sm">搜索</button>
 			</div>
 		</div>
 

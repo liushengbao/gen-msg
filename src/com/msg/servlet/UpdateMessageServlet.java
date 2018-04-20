@@ -84,8 +84,8 @@ public class UpdateMessageServlet extends HttpServlet {
 		// 备注
 		msgDef.setMsg_note(HttpHelpler.getParameter(request, "msg_note"));
 		System.out.println(JsonHelper.toS(msgDef));// TODO syso
-		MsgMgr.getInstance().addModifyMsgDef(msgDef);
-		MsgMgr.getInstance().submit();// FIXME 这里为了测试先每次都提交
+		// MsgMgr.getInstance().addModifyMsgDef(msgDef);
+		// MsgMgr.getInstance().submit();// FIXME 这里为了测试先每次都提交
 	}
 
 	/**

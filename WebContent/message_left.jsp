@@ -5,6 +5,19 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<style type="text/css">
+	div.msg_left a {
+		font-family:sans-serif;
+		font-size:14px;
+		color:#1E90FF;
+	}
+	div.msg_left p {
+		font-family:sans-serif;
+		font-size:13px;
+		display: inline;
+		color:#87CEEB;
+	}
+</style>
 </head>
 
 <script type="text/javascript" src="style/js/jquery-3.0.0.min.js"></script>
@@ -34,13 +47,13 @@
 	});
 </script>
 <body>
-	<div style="overflow: scroll;">
+	<div style="overflow: scroll;" class="msg_left">
 		<table>
 			<!-- 标头内容 -->
 			<thead>
 				<tr>
 					<td style="width: 31px; padding: 5px 0px 3px 0;"></td>
-					<td style="padding: 5px 0px 3px 0;">分类名称</td>
+					<td style="padding: 5px 0px 3px 0;"><p style="color:#696969;font-size:16px">分类名称</p></td>
 				</tr>
 			</thead>
 
@@ -49,7 +62,7 @@
 				<tbody id="group_${cat.msg_cat_id}">
 					<tr>
 						<td style="width: 31px; padding: 1px 0px 1px 0;"><a href="javascript:;" id="a_${cat.msg_cat_id}" class="msg_show">[+]</a><a href="javascript:;" id="h_${cat.msg_cat_id}" class="msg_hide" style="display: none;">[ - ]</a></td>
-						<td style="width: 287px; padding: 1px 2px 1px 0;"><a href="javascript:;">${cat.msg_cat}</a>--${cat.firstMsgName}&nbsp<a href="">删除</a></td>
+						<td style="width: 287px; padding: 1px 2px 1px 0;"><a href="javascript:;">${cat.msg_cat}</a>--<p>${cat.firstMsgName}</p>&nbsp<a href="">删除</a></td>
 					</tr>
 				</tbody>
 			
