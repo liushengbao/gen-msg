@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import com.msg.bean.MsgCat;
 import com.msg.bean.MsgDef;
 import com.msg.bean.MsgField;
+import com.msg.bean.WriteField;
 import com.msg.vo.MsgCatItem;
 import com.msg.vo.MsgItem;
 import freemarker.template.Configuration;
@@ -37,8 +38,10 @@ public class MsgMgr {
 //		saveMsgDefsToDB();//FIXME 屏蔽写入数据库
 	}
 	
+	public List<WriteField> toWriteFields(List<MsgField> list) {
+		return list.stream().map(v -> WriteField.valueOf(v)).collect(Collectors.toList());
+	}
 	
-
 	/** 写入文件 >> 例如Msg1010101.java **/
 	public void writeFiles() {
 		List<MsgDef> list = CacheMgr.getInstance().getModifyMsgDefs().values().stream().collect(Collectors.toList());

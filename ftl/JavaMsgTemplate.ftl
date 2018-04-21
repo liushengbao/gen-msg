@@ -6,8 +6,7 @@ import java.util.List;
  *  @author ${author}
  */
 public class ${className} extends AbstractMsgPacket {
-  	
-  <#list fields as field> 
+<#list fields as field> 
   	<#if field.ft == "base">
   		<#if field.fv == "int8">
     private byte ${field.fn};
@@ -29,7 +28,7 @@ public class ${className} extends AbstractMsgPacket {
     <#if field.ft == "map">
     private Map<${field.fk},${field.fv}> ${field.fn} = new HashMap<>();
     </#if>
-  </#list>
+ </#list>
     
     public static ${className} Create() {
        return new ${className}();
