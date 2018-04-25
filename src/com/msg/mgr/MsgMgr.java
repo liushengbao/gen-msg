@@ -37,7 +37,7 @@ public class MsgMgr {
 	/** 提交修改 **/
 	public void submit() {
 		writeFiles();
-//		saveMsgDefsToDB();
+		saveMsgDefsToDB();
 	}
 	
 	/** 写入文件 >> 例如Msg1010101.java **/

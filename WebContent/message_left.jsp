@@ -62,7 +62,7 @@
 				<tbody id="group_${cat.msg_cat_id}">
 					<tr>
 						<td style="width: 31px; padding: 1px 0px 1px 0;"><a href="javascript:;" id="a_${cat.msg_cat_id}" class="msg_show">[+]</a><a href="javascript:;" id="h_${cat.msg_cat_id}" class="msg_hide" style="display: none;">[ - ]</a></td>
-						<td style="width: 287px; padding: 1px 2px 1px 0;"><a href="javascript:;">${cat.msg_cat}</a>--<p>${cat.firstMsgName}</p>&nbsp<a href="">删除</a></td>
+						<td style="width: 287px; padding: 1px 2px 1px 0;"><a href="javascript:;">${cat.msg_cat}</a>--<p>${cat.firstMsgName}</p><a href="">删除</a></td>
 					</tr>
 				</tbody>
 			
@@ -70,9 +70,11 @@
 					<c:forEach items="${cat.items}" var="msg">
 						<tr>
 							<td style="padding:1px 0px 1px 0;">&nbsp;</td>
-							<td colspan="2" style="padding:1px 0px 1px 0;">
+							<td>
 				                <div>
-				                    <a style="width:240px;width:220px;display:block;float:left;" id="" href="javascript:;" onclick="edit_msg(${msg.msg_id})">${msg.req_id}--${msg.msg_desc}</a>
+				                    <a style="float:left;" id="" href="javascript:;" onclick="show_msg(${msg.msg_id})">${msg.req_id}--${msg.msg_desc}</a>
+				                    <a href="javascript:;" onclick="edit_msg(${msg.msg_id})" style="float:left;margin-left: 20px;">编辑</a>
+				                    <a href="javascript:;" onclick="" style="float:left;margin-left: 5px;">删除</a>
 				                </div>
 	            			</td>
 						</tr>
