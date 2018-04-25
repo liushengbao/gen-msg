@@ -4,7 +4,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import com.msg.bean.MsgCat;
 import com.msg.bean.MsgDef;
 import com.msg.util.IdHelper;
-
+/**
+ * 缓存中心
+ * 
+ * @author shengbao.Liu
+ *
+ */
 public class CacheMgr {
 	
 	private static final CacheMgr instance = new CacheMgr();
@@ -35,7 +40,6 @@ public class CacheMgr {
 	public void loadMsgDef() {
 		this.msgDefs.clear();
 		DBMgr.getInstance().loadMsgDefs().forEach(v -> this.msgDefs.put(v.getMsg_id(), v));
-		System.out.println("load msgDefs size:" + this.msgDefs.size());
 	}
 
 	/** 载入类目  **/
@@ -43,7 +47,6 @@ public class CacheMgr {
 		this.msgCats.clear();
 		DBMgr.getInstance().getAllMsgCats().forEach(v -> this.msgCats.put(v.getMsg_cat_id(), v));
 		this.msgCats.values().stream().forEach(v -> this.msgCatNames.put(v.getMsg_cat(), v.getMsg_cat_id()));
-		System.out.println("load msgCats size:" + this.msgCats.size());
 	}
 	
 	public ConcurrentHashMap<Integer, MsgDef> getModifyMsgDefs() {

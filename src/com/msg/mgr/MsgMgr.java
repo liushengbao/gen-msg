@@ -1,6 +1,8 @@
 package com.msg.mgr;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
@@ -11,7 +13,7 @@ import java.util.stream.Collectors;
 import com.msg.bean.MsgCat;
 import com.msg.bean.MsgDef;
 import com.msg.bean.MsgField;
-import com.msg.bean.WriteField;
+import com.msg.util.FreemarkHelper;
 import com.msg.vo.MsgCatItem;
 import com.msg.vo.MsgItem;
 import freemarker.template.Configuration;
@@ -35,22 +37,20 @@ public class MsgMgr {
 	/** 提交修改 **/
 	public void submit() {
 		writeFiles();
-//		saveMsgDefsToDB();//FIXME 屏蔽写入数据库
-	}
-	
-	public List<WriteField> toWriteFields(List<MsgField> list) {
-		return list.stream().map(v -> WriteField.valueOf(v)).collect(Collectors.toList());
+		saveMsgDefsToDB();
 	}
 	
 	/** 写入文件 >> 例如Msg1010101.java **/
 	public void writeFiles() {
 		List<MsgDef> list = CacheMgr.getInstance().getModifyMsgDefs().values().stream().collect(Collectors.toList());
-
-		Configuration cfg = new Configuration(Configuration.VERSION_2_3_22);
+		
+		writeJava(list);
+	}
+	
+	/** 写入.java的逻辑 **/
+	private void writeJava(List<MsgDef> list) {
+		Configuration cfg = FreemarkHelper.getCfg();
 		try {
-			cfg.setDirectoryForTemplateLoading(new File("E:\\workspace-oxygen\\gen-msg\\ftl"));
-			cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-
 			for (MsgDef msgDef : list) {
 				Map<String, Object> root = new HashMap<String, Object>();
 				// 请求
@@ -62,7 +62,8 @@ public class MsgMgr {
 				Template temp = cfg.getTemplate("JavaMsgTemplate.ftl");
 				Writer out = new OutputStreamWriter(System.out);
 				temp.process(root, out);
-
+				out.close();
+				
 				// 返回
 				root.clear();
 				if (msgDef.getRsp_id() > 0) {
@@ -75,6 +76,7 @@ public class MsgMgr {
 					temp = cfg.getTemplate("JavaMsgTemplate.ftl");
 					out = new OutputStreamWriter(System.out);
 					temp.process(root, out);
+					out.close();
 				}
 			}
 
@@ -83,7 +85,6 @@ public class MsgMgr {
 		} catch (TemplateException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	/** 保存消息定义到DB **/
@@ -93,6 +94,7 @@ public class MsgMgr {
 		CacheMgr.getInstance().getModifyMsgDefs().clear();
 	}
 	
+	/** 添加类别  **/
 	public void addCat(MsgCat msgCat) {
 		if (!CacheMgr.getInstance().getMsgCatNames().containsKey(msgCat.getMsg_cat())) {
 			DBMgr.getInstance().addMsgCat(msgCat);
@@ -103,7 +105,7 @@ public class MsgMgr {
 	public static void main(String[] args) {
 		Configuration cfg = new Configuration(Configuration.VERSION_2_3_22);
 		try {
-			cfg.setDirectoryForTemplateLoading(new File("E:\\workspace-oxygen\\gen-msg\\ftl"));
+			cfg.setDirectoryForTemplateLoading(new File("E:\\workspace-oxygen\\gen-msg\\WebContent\\ftl\\"));
 			cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
 
 			Map<String, Object> root = new HashMap<String, Object>();
@@ -111,8 +113,14 @@ public class MsgMgr {
 			root.put("packageName", "co");
 			root.put("className", "Msg1010101");
 			root.put("author", "autoMake");
-			Template temp = cfg.getTemplate("JavaMsgTemplate.ftl");
-			Writer out = new OutputStreamWriter(System.out);
+			Template temp = cfg.getTemplate("test.ftl");
+			File outFile = new File("E:\\workspace-oxygen\\gen-msg\\WebContent\\gen\\test.java");
+	        Writer out = null;
+	        try {
+	            out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFile), "utf-8"));
+	        } catch (Exception e1) {
+	            e1.printStackTrace();
+	        }
 			temp.process(root, out);
 		} catch (IOException e1) {
 			e1.printStackTrace();

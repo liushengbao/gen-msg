@@ -11,7 +11,6 @@ import com.msg.bean.MsgField;
 import com.msg.mgr.MsgMgr;
 import com.msg.util.HttpHelpler;
 import com.msg.util.IdHelper;
-import com.msg.util.JsonHelper;
 
 /**
  * 添加修改消息
@@ -90,11 +89,11 @@ public class UpdateMessageServlet extends HttpServlet {
 			msgField.setDesc(rfd);
 			msgDef.getRspBodys().add(msgField);
 		}
+		
 		// 备注
 		msgDef.setMsg_note(HttpHelpler.getParameter(request, "msg_note"));
 		MsgMgr.getInstance().addModifyMsgDef(msgDef);
 		MsgMgr.getInstance().submit();// FIXME 这里为了测试先每次都提交
-//		System.out.println(JsonHelper.toS(msgDef));// TODO syso
 	}
 
 	/**
