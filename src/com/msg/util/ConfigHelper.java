@@ -30,6 +30,7 @@ public class ConfigHelper {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		LogUtil.console.info("服务器全局配置初始化完成！");
 	}
 	
 	public static String getCfgVal(String key, String defaultValue) {

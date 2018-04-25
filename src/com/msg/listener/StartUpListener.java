@@ -7,6 +7,7 @@ import com.msg.mgr.CacheMgr;
 import com.msg.mgr.DBMgr;
 import com.msg.util.ConfigHelper;
 import com.msg.util.FreemarkHelper;
+import com.msg.util.LogUtil;
 /**
  * 启动监听器
  * @author shengbao.Liu
@@ -16,6 +17,7 @@ public class StartUpListener implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
+		LogUtil.console.info("服务器启动处理中。。。。");
 		ServletContextListener.super.contextInitialized(sce);
 		// 上下文
 		Context.setServletContext(sce.getServletContext());

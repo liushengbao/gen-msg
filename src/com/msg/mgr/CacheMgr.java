@@ -4,6 +4,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import com.msg.bean.MsgCat;
 import com.msg.bean.MsgDef;
 import com.msg.util.IdHelper;
+import com.msg.util.LogUtil;
 /**
  * 缓存中心
  * 
@@ -34,6 +35,8 @@ public class CacheMgr {
 		
 		IdHelper.setMsgCatId(this.msgCats.keySet().stream().max((a,b) -> Integer.compare(a, b)).orElse(0));
 		IdHelper.setMsgId(this.msgDefs.keySet().stream().max((a,b) -> Integer.compare(a, b)).orElse(0));
+		LogUtil.console.info("数据库 消息定义加载完成,size:" + this.msgCats.size());
+		LogUtil.console.info("数据库 消息类别加载完成,size:" + this.msgDefs.size());
 	}
 	
 	/** 载入消息定义 **/

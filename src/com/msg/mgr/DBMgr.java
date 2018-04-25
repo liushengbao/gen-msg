@@ -14,6 +14,7 @@ import com.msg.bean.MsgDef;
 import com.msg.bean.MsgField;
 import com.msg.util.ConfigHelper;
 import com.msg.util.JsonHelper;
+import com.msg.util.LogUtil;
 
 public class DBMgr {
 
@@ -25,6 +26,7 @@ public class DBMgr {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+		LogUtil.console.info("数据库加载驱动完毕！");
 	}
 
 	public static DBMgr getInstance() {
