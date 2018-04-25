@@ -29,6 +29,13 @@
 		$("#msg_edit").load("show_message.jsp", {req_id:$req_id});
 	}
 	
+	/** 删除消息 **/
+	function del_msg($req_id) {
+		$.get("del_msg", {msg_id:$req_id}, function(data) {
+			alert("删除成功!");
+		});
+	}
+	
 	
 </script>
 
@@ -69,8 +76,6 @@
 
 		<!-- 消息编辑区域 -->
 		<div id="msg_edit" class="msg_edit" style="float: left;"></div>
-
-
 
 	</div>
 

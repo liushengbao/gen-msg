@@ -34,6 +34,9 @@ public class MsgItem {
 		msgDef.getReqBodys().forEach(v -> {
 			item.getReqFields().add(MsgFieldItem.valueOf(v));
 		});
+		msgDef.getRspBodys().forEach(v -> {
+			item.getRspFields().add(MsgFieldItem.valueOf(v));
+		});
 		return item;
 	}
 	

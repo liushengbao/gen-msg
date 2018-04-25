@@ -73,7 +73,17 @@
 	     	<c:forEach items="${msgItem.reqFields}" var="field">
 	     		
 	     		<tr>
-					<td><label>类型:</label>${field.ft}</td>
+	     			<td>${field.id}
+	     			<c:if test="${field.ft == 'base'}">
+	     			<label>类型:</label>${field.fv}
+	     			</c:if>
+	     			<c:if test="${field.ft == 'array'}">
+	     			<label>类型:</label>array&lt;${field.fv}&gt;
+	     			</c:if>
+	     			<c:if test="${field.ft == 'map'}">
+	     			<label>类型:</label>map&lt;${field.fk},${field.fv}&gt;
+	     			</c:if>
+	     			</td>
 					<td><label>变量名:</label>${field.fn}</td>
 					<td><label>描述:</label>${field.desc}</td>
 				</tr>
@@ -86,7 +96,17 @@
 			 </tr>
 	     	<c:forEach items="${msgItem.rspFields}" var="field">
 	     		<tr>
-					<td><label>类型:</label>${field.ft}</td>
+	     			<td>${field.id}
+	     			<c:if test="${field.ft == 'base'}">
+	     			<label>类型:</label>${field.fv}
+	     			</c:if>
+	     			<c:if test="${field.ft == 'array'}">
+	     			<label>类型:</label>array&lt;${field.fv}&gt;
+	     			</c:if>
+	     			<c:if test="${field.ft == 'map'}">
+	     			<label>类型:</label>map&lt;${field.fk},${field.fv}&gt;
+	     			</c:if>
+	     			</td>
 					<td><label>变量名:</label>${field.fn}</td>
 					<td><label>描述:</label>${field.desc}</td>
 				</tr>

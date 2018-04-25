@@ -74,7 +74,7 @@
 				                <div>
 				                    <a style="float:left;" id="" href="javascript:;" onclick="show_msg(${msg.msg_id})">${msg.req_id}--${msg.msg_desc}</a>
 				                    <a href="javascript:;" onclick="edit_msg(${msg.msg_id})" style="float:left;margin-left: 20px;">编辑</a>
-				                    <a href="javascript:;" onclick="" style="float:left;margin-left: 5px;">删除</a>
+				                    <a href="javascript:;" onclick="del_msg(${msg.msg_id})" style="float:left;margin-left: 5px;">删除</a>
 				                </div>
 	            			</td>
 						</tr>

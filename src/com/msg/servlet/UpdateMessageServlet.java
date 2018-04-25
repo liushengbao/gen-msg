@@ -34,7 +34,7 @@ public class UpdateMessageServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int reqFieldCount = (int) request.getParameterMap().keySet().stream().filter(k -> k.startsWith("req_f_name")).count();
-		int rspFieldCount = (int) request.getParameterMap().keySet().stream().filter(k -> k.startsWith("req_f_name")).count();
+		int rspFieldCount = (int) request.getParameterMap().keySet().stream().filter(k -> k.startsWith("rsp_f_name")).count();
 		String reqId = HttpHelpler.getParameter(request, "req_id");
 		if (reqId == "") {
 			return;
@@ -92,8 +92,9 @@ public class UpdateMessageServlet extends HttpServlet {
 		
 		// 备注
 		msgDef.setMsg_note(HttpHelpler.getParameter(request, "msg_note"));
+		
 		MsgMgr.getInstance().addModifyMsgDef(msgDef);
-		MsgMgr.getInstance().submit();// FIXME 这里为了测试先每次都提交
+		MsgMgr.getInstance().submit();
 	}
 
 	/**

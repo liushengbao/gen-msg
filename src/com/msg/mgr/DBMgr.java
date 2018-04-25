@@ -121,4 +121,16 @@ public class DBMgr {
 		return Collections.emptyList();
 	}
 
+	public void delMsg(Integer msgId) {
+		Connection conn = getConnection();
+		QueryRunner run = new QueryRunner();
+		try {
+			run.execute(conn, "delete from msg_info where msg_id=?", msgId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DbUtils.closeQuietly(conn);
+		}
+	}
+
 }

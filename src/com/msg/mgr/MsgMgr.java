@@ -62,7 +62,6 @@ public class MsgMgr {
 				Template temp = cfg.getTemplate("JavaMsgTemplate.ftl");
 				Writer out = new OutputStreamWriter(System.out);
 				temp.process(root, out);
-				out.close();
 				
 				// 返回
 				root.clear();
@@ -74,10 +73,9 @@ public class MsgMgr {
 					root.put("fields", msgDef.getRspBodys());
 					
 					temp = cfg.getTemplate("JavaMsgTemplate.ftl");
-					out = new OutputStreamWriter(System.out);
 					temp.process(root, out);
-					out.close();
 				}
+				out.close();
 			}
 
 		} catch (IOException e1) {
@@ -164,6 +162,12 @@ public class MsgMgr {
 		} else {
 			return field.getFv();
 		}
+	}
+
+	public void delMsg(Integer msgId) {
+		CacheMgr.getInstance().getModifyMsgDefs().remove(msgId);
+		CacheMgr.getInstance().getMsgDefs().remove(msgId);
+		DBMgr.getInstance().delMsg(msgId);
 	}
 	
 }
