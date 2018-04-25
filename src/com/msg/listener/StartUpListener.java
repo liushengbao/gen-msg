@@ -7,7 +7,11 @@ import com.msg.mgr.CacheMgr;
 import com.msg.mgr.DBMgr;
 import com.msg.util.ConfigHelper;
 import com.msg.util.FreemarkHelper;
-
+/**
+ * 启动监听器
+ * @author shengbao.Liu
+ *
+ */
 public class StartUpListener implements ServletContextListener {
 
 	@Override
