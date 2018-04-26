@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import com.msg.bean.MsgCat;
 import com.msg.bean.MsgDef;
 import com.msg.bean.MsgField;
+import com.msg.util.ConfigHelper;
 import com.msg.util.FreemarkHelper;
 import com.msg.vo.MsgCatItem;
 import com.msg.vo.MsgItem;
@@ -50,32 +51,47 @@ public class MsgMgr {
 	/** 写入.java的逻辑 **/
 	private void writeJava(List<MsgDef> list) {
 		Configuration cfg = FreemarkHelper.getCfg();
+		String javaPath = ConfigHelper.getCfgVal("gen.java.dir");
 		try {
 			for (MsgDef msgDef : list) {
 				Map<String, Object> root = new HashMap<String, Object>();
 				// 请求
-				root.put("packageName", "com.shengbao.message");
+				root.put("packageName", "org.message.game");
 				root.put("className", "Msg" + msgDef.getReq_id());
 				root.put("author", "shengbao");
+				root.put("desc", msgDef.getMsg_desc());
 				root.put("reqId", msgDef.getReq_id());
 				root.put("fields", msgDef.getReqBodys());
 				Template temp = cfg.getTemplate("JavaMsgTemplate.ftl");
-				Writer out = new OutputStreamWriter(System.out);
+				File outFile = new File(javaPath + "\\Msg" +msgDef.getReq_id()+ ".java");
+		        Writer out = null;
+		        try {
+		            out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFile), "utf-8"));
+		        } catch (Exception e1) {
+		            e1.printStackTrace();
+		        }
 				temp.process(root, out);
+				out.close();
 				
 				// 返回
 				root.clear();
 				if (msgDef.getRsp_id() > 0) {
-					root.put("packageName", "com.shengbao.message");
+					root.put("packageName", "org.message.game");
 					root.put("className", "Msg" + msgDef.getRsp_id());
 					root.put("author", "shengbao");
+					root.put("desc", msgDef.getMsg_desc());
 					root.put("reqId", msgDef.getRsp_id());
 					root.put("fields", msgDef.getRspBodys());
 					
 					temp = cfg.getTemplate("JavaMsgTemplate.ftl");
+			        try {
+			            out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(javaPath + "\\Msg" +msgDef.getRsp_id()+ ".java")), "utf-8"));
+			        } catch (Exception e1) {
+			            e1.printStackTrace();
+			        }
 					temp.process(root, out);
+					out.close();
 				}
-				out.close();
 			}
 
 		} catch (IOException e1) {

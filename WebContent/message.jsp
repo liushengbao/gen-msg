@@ -33,9 +33,31 @@
 	function del_msg($req_id) {
 		$.get("del_msg", {msg_id:$req_id}, function(data) {
 			alert("删除成功!");
+			window.location.href = window.location.href;
 		});
 	}
 	
+	/** 提交消息  **/
+	function submit_msg() {
+		var ok = validate();
+		if (ok) {
+			var data = $("#msg_form").serialize();
+			alert(data);
+			$.ajax({
+				type : "POST",
+				url : "update_msg",
+				data : data,// 序列化表单值
+				async : false,
+				error : function(request) {
+					alert("消息提交异常!");
+				},
+				success : function(data) {
+					alert("消息提交成功!");
+					window.location.href = window.location.href;
+				}
+			});
+		}
+	}
 	
 </script>
 

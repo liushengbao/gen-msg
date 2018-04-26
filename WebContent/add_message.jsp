@@ -112,15 +112,38 @@
 		var rc = 0;
 		$("#add_req_btn").click(function() {
 			rc++;
-			$(".req-body").append('<input type="text" style="display:none;" id="req_f_key_'+ rc + '" name="req_f_key_'+ rc + '"><input type="text" style="display:none;" id="req_f_value_'+ rc + '" name="req_f_value_'+ rc + '"> <input type="text" style="display:none;" id="req_f_type_'+ rc + '" name="req_f_type_'+ rc + '"><label>类型:</label><input class="req_f_type_show" name="req_f_type_show_'+rc+'" type="text" value="" id="req_f_type_show_'+ rc + '" onfocus="focus_edit_req('+rc+')" data-toggle="modal" data-target="#exampleModal"/> <label>变量名:</label><input name="req_f_name_'+rc+'" type="text" value="" id="req_f_name_'+rc+'" /> <label>描述:</label><input id="req_f_desc_'+rc+'" name="req_f_desc_'+rc+'" type="text" value="" /> <br/>');
+			$(".req-body").append('<span style="margin-left:5px;">'+rc+'</span>');
+			$(".req-body").append('<input type="text" style="display:none;" id="req_f_key_'+ rc + '" name="req_f_key_'+ rc + '">');
+			$(".req-body").append('<input type="text" style="display:none;" id="req_f_value_'+ rc + '" name="req_f_value_'+ rc + '">');
+			$(".req-body").append('<input type="text" style="display:none;" id="req_f_type_'+ rc + '" name="req_f_type_'+ rc + '">');
+			$(".req-body").append('<span style="margin-left:5px;">类型:</span>');
+			$(".req-body").append('<input style="width:100px;" name="req_f_type_show_'+rc+'" type="text" value="" id="req_f_type_show_'+ rc + '" onfocus="focus_edit_req('+rc+')" data-toggle="modal" data-target="#exampleModal"/>');
+			$(".req-body").append('<span style="margin-left:5px;">变量名:</span>');
+			$(".req-body").append('<input style="width:150px;" name="req_f_name_'+rc+'" type="text" value="" id="req_f_name_'+rc+'" />');
+			$(".req-body").append('<span style="margin-left:5px;">描述:</span>');
+			$(".req-body").append('<input id="req_f_desc_'+rc+'" name="req_f_desc_'+rc+'" type="text" value="" />');
+			$(".req-body").append('<a href="javascript:;" style="margin-left:10px;" id="req_f_def_'+rc+'" onclick=>删除</a>');
+			$(".req-body").append('<br/>');
 		});
+		
 		// 添加返回字段
 		var rc2 = 0;
 		$("#add_rsp_btn").click(function() {
 			rc2++;
-			$(".rsp-body").append('<input type="text" style="display:none;" id="rsp_f_key_'+ rc2 + '" name="rsp_f_key_'+ rc2 + '"><input type="text" style="display:none;" id="rsp_f_value_'+ rc2 + '" name="rsp_f_value_'+ rc2 + '"> <input type="text" style="display:none;" id="rsp_f_type_'+ rc2 + '" name="rsp_f_type_'+ rc2 + '"><label>类型:</label><input name="rsp_f_type_show_'+rc2+'" type="text" value="" id="rsp_f_type_show_'+ rc2 + '" class="rsp_f_type_show_" onfocus="focus_edit_rsp('+rc2+')" data-toggle="modal" data-target="#exampleModal"/> <label>变量名:</label><input name="rsp_f_name_'+rc2+'" type="text" value="" id="rsp_f_name_'+rc2+'"/> <label>描述:</label><input id="rsp_f_desc_'+rc2+'" name="rsp_f_desc_'+rc2+'" type="text" value="" /> <br/>');
+			$(".rsp-body").append('<span style="margin-left:5px;">'+rc2+'</span>');
+			$(".rsp-body").append('<input type="text" style="display:none;" id="rsp_f_key_'+ rc2 + '" name="rsp_f_key_'+ rc2 + '">');
+			$(".rsp-body").append('<input type="text" style="display:none;" id="rsp_f_value_'+ rc2 + '" name="rsp_f_value_'+ rc2 + '">');
+			$(".rsp-body").append('<input type="text" style="display:none;" id="rsp_f_type_'+ rc2 + '" name="rsp_f_type_'+ rc2 + '">');
+			$(".rsp-body").append('<span style="margin-left:5px;">类型:</span>');
+			$(".rsp-body").append('<input style="width:100px;" name="rsp_f_type_show_'+rc2+'" type="text" value="" id="rsp_f_type_show_'+ rc2 + '" onfocus="focus_edit_rsp('+rc2+')" data-toggle="modal" data-target="#exampleModal"/>');
+			$(".rsp-body").append('<span style="margin-left:5px;">变量名:</span>');
+			$(".rsp-body").append('<input style="width:150px;" name="rsp_f_name_'+rc2+'" type="text" value="" id="rsp_f_name_'+rc2+'"/>');
+			$(".rsp-body").append('<span style="margin-left:5px;">描述:</span>');
+			$(".rsp-body").append('<input id="rsp_f_desc_'+rc2+'" name="rsp_f_desc_'+rc2+'" type="text" value="" />');
+			$(".rsp-body").append('<a href="javascript:;" style="margin-left:10px;" id="rsp_f_def_'+rc2+'">删除</a>');
+			$(".rsp-body").append('<br/>');
 		});
-
+		
 		/** 消息号输入框改变事件  **/
 		$('#req_id').bind('input propertychange', function() {
 			var data = $(this).val();
@@ -146,14 +169,16 @@
 					},
 					success : function(data) {
 						alert("消息提交成功!");
+						window.location.href = window.location.href;
 					}
 				});
 			}
-		});	
+		});
 		
 	});
 	
 </script>
+
 </head>
 
 <body>

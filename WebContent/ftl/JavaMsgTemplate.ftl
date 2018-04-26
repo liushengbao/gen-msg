@@ -1,4 +1,6 @@
 package ${packageName};
+
+import org.common.socket.core.*;
 <#assign import_util = 0>
 <#list fields as field> 
 <#if field.ft == "array">
@@ -15,6 +17,7 @@ import java.util.*;
 </#if>
 </#list>
 /**
+ *  消息说明:${desc}
  *  @author ${author}
  */
 public class ${className} extends AbstractMsgPacket {
@@ -176,15 +179,15 @@ public class ${className} extends AbstractMsgPacket {
 	    <#list fields as field> 
         <#if field.ft == "base">
         <#if field.fv == "int8">
-        this.${field.fn}.readInt8(msgPacket);
+        this.${field.fn} = msgPacket.readInt8();
         <#elseif field.fv == "int16">
-        this.${field.fn}.readInt16(msgPacket);
+        this.${field.fn} = msgPacket.readInt16();
         <#elseif field.fv == "int32">
-        this.${field.fn}.readInt32(msgPacket);
+        this.${field.fn} = msgPacket.readInt32();
         <#elseif field.fv == "int64">
-        this.${field.fn}.readInt64(msgPacket);
+        this.${field.fn} = msgPacket.readInt64();
         <#elseif field.fv == "string">
-        this.${field.fn}.readString(msgPacket);
+        this.${field.fn} = msgPacket.readString();
         <#else>
         ${field.fn}.decode(msgPacket);
         </#if>
@@ -207,7 +210,7 @@ public class ${className} extends AbstractMsgPacket {
             item.decode(msgPacket);
             ${field.fn}.add(item);
         </#if>
-        });
+        }
 		</#if>        
         <#if field.ft == "map">
         short ${field.fn}_size = msgPacket.readInt16();

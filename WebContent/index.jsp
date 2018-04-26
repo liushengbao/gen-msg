@@ -10,6 +10,44 @@
 <script type="text/javascript" src="style/js/jquery-3.0.0.min.js"></script>
 <link href="style/css/bootstrap.min.css" rel="stylesheet">
 <script src="style/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+/** 验证表单  **/
+function validate() {
+	if (!isReqNumber($("#req_id").val())) {
+		return false;
+	}
+	if (isNullStr($("#msg_desc").val())) {
+		alert("消息描述不能为空!");
+		return false;
+	}
+	return true;
+}
+
+function isNullStr(a) {
+	if (a == null || a == "") {
+		return true;
+	}
+	return false;
+}
+
+/** 是否为纯数字  **/
+function isReqNumber(value) {
+	var reg = new RegExp("^[0-9]*$");
+	if (!reg.test(value)) {
+		alert("消息号必须存数字!");
+		return false;
+	}
+	if (value > 9999999) {
+		alert("消息号不能大于9999999")
+		return false;
+	}
+	if (value < 1000000) {
+		alert("消息号不能小于1000000")
+		return false;
+	}
+	return true;
+}
+</script>
 <style>
 body {
 	margin-left: 0px;
