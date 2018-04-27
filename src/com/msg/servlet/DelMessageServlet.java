@@ -6,8 +6,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.msg.mgr.CacheMgr;
 import com.msg.mgr.MsgMgr;
 import com.msg.util.HttpHelpler;
 import com.msg.util.LogUtil;

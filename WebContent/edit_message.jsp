@@ -113,7 +113,18 @@
 				 }
 			 });
 			rc++;
-			$(".req-body").append('<input type="text" style="display:none;" id="req_f_key_'+ rc + '" name="req_f_key_'+ rc + '"><input type="text" style="display:none;" id="req_f_value_'+ rc + '" name="req_f_value_'+ rc + '"> <input type="text" style="display:none;" id="req_f_type_'+ rc + '" name="req_f_type_'+ rc + '"><label>类型:</label><input class="req_f_type_show" name="req_f_type_show_'+rc+'" type="text" value="" id="req_f_type_show_'+ rc + '" onfocus="focus_edit_req('+rc+')" data-toggle="modal" data-target="#exampleModal"/> <label>变量名:</label><input name="req_f_name_'+rc+'" type="text" value="" id="req_f_name_'+rc+'" /> <label>描述:</label><input id="req_f_desc_'+rc+'" name="req_f_desc_'+rc+'" type="text" value="" /> <br/>');
+			$(".req-body").append('<span>'+rc+'</span>');
+			$(".req-body").append('<input type="text" style="display:none;" id="req_f_key_'+ rc + '" name="req_f_key_'+ rc + '">');
+			$(".req-body").append('<input type="text" style="display:none;" id="req_f_value_'+ rc + '" name="req_f_value_'+ rc + '">');
+			$(".req-body").append('<input type="text" style="display:none;" id="req_f_type_'+ rc + '" name="req_f_type_'+ rc + '">');
+			$(".req-body").append('<span>类型:</span>');
+			$(".req-body").append('<input style="width:100px;" name="req_f_type_show_'+rc+'" type="text" value="" id="req_f_type_show_'+ rc + '" onfocus="focus_edit_req('+rc+')" data-toggle="modal" data-target="#exampleModal"/>');
+			$(".req-body").append('<span>变量名:</span>');
+			$(".req-body").append('<input name="req_f_name_'+rc+'" type="text" value="" id="req_f_name_'+rc+'" />');
+			$(".req-body").append('<span>描述:</span>');
+			$(".req-body").append('<input id="req_f_desc_'+rc+'" name="req_f_desc_'+rc+'" type="text" value="" />');
+			$(".req-body").append('<a href="javascript:;" style="margin-left:10px;" id="req_f_def_'+rc+'" onclick=>删除</a>');
+			$(".req-body").append('<br/>');
 		});
 	
 		// 添加返回字段
@@ -126,7 +137,18 @@
 				 }
 			 });
 			rc2++;
-			$(".rsp-body").append('<input type="text" style="display:none;" id="rsp_f_key_'+ rc2 + '" name="rsp_f_key_'+ rc2 + '"><input type="text" style="display:none;" id="rsp_f_value_'+ rc2 + '" name="rsp_f_value_'+ rc2 + '"> <input type="text" style="display:none;" id="rsp_f_type_'+ rc2 + '" name="rsp_f_type_'+ rc2 + '"><label>类型:</label><input name="rsp_f_type_show_'+rc2+'" type="text" value="" id="rsp_f_type_show_'+ rc2 + '" class="rsp_f_type_show_" onfocus="focus_edit_rsp('+rc2+')" data-toggle="modal" data-target="#exampleModal"/> <label>变量名:</label><input name="rsp_f_name_'+rc2+'" type="text" value="" id="rsp_f_name_'+rc2+'"/> <label>描述:</label><input id="rsp_f_desc_'+rc2+'" name="rsp_f_desc_'+rc2+'" type="text" value="" /> <br/>');
+			$(".rsp-body").append('<span>'+rc2+'</span>');
+			$(".rsp-body").append('<input type="text" style="display:none;" id="rsp_f_key_'+ rc2 + '" name="rsp_f_key_'+ rc2 + '">');
+			$(".rsp-body").append('<input type="text" style="display:none;" id="rsp_f_value_'+ rc2 + '" name="rsp_f_value_'+ rc2 + '">');
+			$(".rsp-body").append('<input type="text" style="display:none;" id="rsp_f_type_'+ rc2 + '" name="rsp_f_type_'+ rc2 + '">');
+			$(".rsp-body").append('<span>类型:</span>');
+			$(".rsp-body").append('<input style="width:100px;" name="rsp_f_type_show_'+rc2+'" type="text" value="" id="rsp_f_type_show_'+ rc2 + '" onfocus="focus_edit_rsp('+rc2+')" data-toggle="modal" data-target="#exampleModal"/>');
+			$(".rsp-body").append('<span>变量名:</span>');
+			$(".rsp-body").append('<input name="rsp_f_name_'+rc2+'" type="text" value="" id="rsp_f_name_'+rc2+'"/>');
+			$(".rsp-body").append('<span>描述:</span>');
+			$(".rsp-body").append('<input id="rsp_f_desc_'+rc2+'" name="rsp_f_desc_'+rc2+'" type="text" value="" />');
+			$(".rsp-body").append('<a href="javascript:;" style="margin-left:10px;" id="rsp_f_del_'+rc2+'">删除</a>');
+			$(".rsp-body").append('<br/>');
 		});
 
 		/** 消息号输入框改变事件  **/
@@ -160,6 +182,15 @@
 		});				
 	});
 </script>
+<style>
+.msg_body input {
+	margin-left: 5px;
+	width:150px;
+}
+.msg_body span {
+	margin-left: 5px;
+}
+</style>
 </head>
 
 <body>
@@ -237,26 +268,30 @@
 				</div>
 			</div>
 			<!-- 请求消息体动态编辑区域 -->
-			<div class="row">
+			<div class="msg_body">
 				<table class="table">
 					<tbody class="req-body">
 						<c:if test="${msgItem != null}">
 							<c:forEach items="${msgItem.reqFields}" var="field">
+							<span>${field.id}</span>
 							<input type="text" style="display:none;" id="req_f_key_${field.id}" name="req_f_key_${field.id}" value="${field.fk}">
 							<input type="text" style="display:none;" id="req_f_value_${field.id}" name="req_f_value_${field.id}" value="${field.fv}">
 							<input type="text" style="display:none;" id="req_f_type_${field.id}" name="req_f_type_${field.id}" value="${field.ft}">
-							<label>类型:</label>
+							<span>类型:</span>
 							<c:if test="${field.ft == 'base'}">
-							<input value="${field.fv}" class="req_f_type_show" name="req_f_type_show_${field.id}" type="text" value="" id="req_f_type_show_${field.id}" onfocus="focus_edit_req(${field.id})" data-toggle="modal" data-target="#exampleModal"/>
+							<input style="width:100px;" value="${field.fv}" class="req_f_type_show" name="req_f_type_show_${field.id}" type="text" value="" id="req_f_type_show_${field.id}" onfocus="focus_edit_req(${field.id})" data-toggle="modal" data-target="#exampleModal"/>
 			     			</c:if>
 			     			<c:if test="${field.ft == 'array'}">
-							<input value="array&lt;${field.fv}&gt;" class="req_f_type_show" name="req_f_type_show_${field.id}" type="text" value="" id="req_f_type_show_${field.id}" onfocus="focus_edit_req(${field.id})" data-toggle="modal" data-target="#exampleModal"/>
+							<input style="width:100px;" value="array&lt;${field.fv}&gt;" class="req_f_type_show" name="req_f_type_show_${field.id}" type="text" value="" id="req_f_type_show_${field.id}" onfocus="focus_edit_req(${field.id})" data-toggle="modal" data-target="#exampleModal"/>
 			     			</c:if>
 			     			<c:if test="${field.ft == 'map'}">
-							<input value="map&lt;${field.fk},${field.fv}&gt;" class="req_f_type_show" name="req_f_type_show_${field.id}" type="text" value="" id="req_f_type_show_${field.id}" onfocus="focus_edit_req(${field.id})" data-toggle="modal" data-target="#exampleModal"/>
+							<input style="width:100px;" value="map&lt;${field.fk},${field.fv}&gt;" class="req_f_type_show" name="req_f_type_show_${field.id}" type="text" value="" id="req_f_type_show_${field.id}" onfocus="focus_edit_req(${field.id})" data-toggle="modal" data-target="#exampleModal"/>
 			     			</c:if>
-							<label>变量名:</label><input name="req_f_name_${field.id}" type="text" value="${field.fn}" /> 
-							<label>描述:</label><input name="req_f_desc_${field.id}" type="text" value="${field.desc}" />
+							<span>变量名:</span>
+							<input name="req_f_name_${field.id}" type="text" value="${field.fn}" /> 
+							<span>描述:</span>
+							<input name="req_f_desc_${field.id}" type="text" value="${field.desc}" />
+							<a href="javascript:;" style="margin-left:10px;" id="req_f_del_${field.id}">删除</a>
 							<br/>
 							</c:forEach>
 						</c:if>
@@ -287,26 +322,30 @@
 			</div>
 
 			<!-- 返回消息内容动态编辑区域  -->
-			<div class="row">
+			<div class="msg_body">
 				<table class="table">
 					<tbody class="rsp-body">
 						<c:if test="${msgItem != null}">
 						<c:forEach items="${msgItem.rspFields}" var="field">
+						<span>${field.id}</span>
 						<input type="text" style="display:none;" id="rsp_f_key_${field.id}" name="rsp_f_key_${field.id}" value="${field.fk}">
 						<input type="text" style="display:none;" id="rsp_f_value_${field.id}" name="rsp_f_value_${field.id}" value="${field.fv}">
 						<input type="text" style="display:none;" id="rsp_f_type_${field.id}" name="rsp_f_type_${field.id}" value="${field.ft}">
-						<label>类型:</label>
+						<span>类型:</span>
 						<c:if test="${field.ft == 'base'}">
-						<input value="${field.fv}" class="rsp_f_type_show" name="rsp_f_type_show_${field.id}" type="text" value="" id="rsp_f_type_show_${field.id}" onfocus="focus_edit_req(${field.id})" data-toggle="modal" data-target="#exampleModal"/>
+						<input style="width: 100px;" value="${field.fv}" class="rsp_f_type_show" name="rsp_f_type_show_${field.id}" type="text" value="" id="rsp_f_type_show_${field.id}" onfocus="focus_edit_req(${field.id})" data-toggle="modal" data-target="#exampleModal"/>
 		     			</c:if>
 		     			<c:if test="${field.ft == 'array'}">
-						<input value="array&lt;${field.fv}&gt;" class="rsp_f_type_show" name="rsp_f_type_show_${field.id}" type="text" value="" id="rsp_f_type_show_${field.id}" onfocus="focus_edit_req(${field.id})" data-toggle="modal" data-target="#exampleModal"/>
+						<input style="width: 100px;" value="array&lt;${field.fv}&gt;" class="rsp_f_type_show" name="rsp_f_type_show_${field.id}" type="text" value="" id="rsp_f_type_show_${field.id}" onfocus="focus_edit_req(${field.id})" data-toggle="modal" data-target="#exampleModal"/>
 		     			</c:if>
 		     			<c:if test="${field.ft == 'map'}">
-						<input value="map&lt;${field.fk},${field.fv}&gt;" class="rsp_f_type_show" name="rsp_f_type_show_${field.id}" type="text" value="" id="rsp_f_type_show_${field.id}" onfocus="focus_edit_req(${field.id})" data-toggle="modal" data-target="#exampleModal"/>
+						<input style="width: 100px;" value="map&lt;${field.fk},${field.fv}&gt;" class="rsp_f_type_show" name="rsp_f_type_show_${field.id}" type="text" value="" id="rsp_f_type_show_${field.id}" onfocus="focus_edit_req(${field.id})" data-toggle="modal" data-target="#exampleModal"/>
 		     			</c:if>
-						<label>变量名:</label><input name="rsp_f_name_${field.id}" type="text" value="${field.fn}" /> 
-						<label>描述:</label><input name="rsp_f_desc_${field.id}" type="text" value="${field.desc}" />
+						<span>变量名:</span>
+						<input name="rsp_f_name_${field.id}" type="text" value="${field.fn}" /> 
+						<span>描述:</span>
+						<input name="rsp_f_desc_${field.id}" type="text" value="${field.desc}" />
+						<a href="javascript:;" style="margin-left:10px;" id="req_f_del_${field.id}">删除</a>
 						<br/>
 						</c:forEach>
 						</c:if>

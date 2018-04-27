@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import com.msg.bean.MsgDef;
 import com.msg.bean.MsgField;
 import com.msg.util.ConfigHelper;
 import com.msg.util.FreemarkHelper;
+import com.msg.util.SvnUtil;
 import com.msg.vo.MsgCatItem;
 import com.msg.vo.MsgItem;
 import freemarker.template.Configuration;
@@ -37,19 +39,23 @@ public class MsgMgr {
 
 	/** 提交修改 **/
 	public void submit() {
-		writeFiles();
+		handleFiles();
 		saveMsgDefsToDB();
 	}
 	
 	/** 写入文件 >> 例如Msg1010101.java **/
-	public void writeFiles() {
+	public void handleFiles() {
 		List<MsgDef> list = CacheMgr.getInstance().getModifyMsgDefs().values().stream().collect(Collectors.toList());
 		
-		writeJava(list);
+		List<File> javaFiles = writeJava(list);
+		if (!javaFiles.isEmpty()) {
+			SvnUtil.commit(javaFiles);
+		}
 	}
 	
 	/** 写入.java的逻辑 **/
-	private void writeJava(List<MsgDef> list) {
+	private List<File> writeJava(List<MsgDef> list) {
+		List<File> files = new ArrayList<>();
 		Configuration cfg = FreemarkHelper.getCfg();
 		String javaPath = ConfigHelper.getCfgVal("gen.java.dir");
 		try {
@@ -63,16 +69,16 @@ public class MsgMgr {
 				root.put("reqId", msgDef.getReq_id());
 				root.put("fields", msgDef.getReqBodys());
 				Template temp = cfg.getTemplate("JavaMsgTemplate.ftl");
-				File outFile = new File(javaPath + "\\Msg" +msgDef.getReq_id()+ ".java");
+				File reqMsgFile = new File(javaPath + "\\Msg" +msgDef.getReq_id()+ ".java");
 		        Writer out = null;
 		        try {
-		            out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFile), "utf-8"));
+		            out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(reqMsgFile), "utf-8"));
 		        } catch (Exception e1) {
 		            e1.printStackTrace();
 		        }
 				temp.process(root, out);
 				out.close();
-				
+				files.add(reqMsgFile);
 				// 返回
 				root.clear();
 				if (msgDef.getRsp_id() > 0) {
@@ -85,7 +91,9 @@ public class MsgMgr {
 					
 					temp = cfg.getTemplate("JavaMsgTemplate.ftl");
 			        try {
-			            out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(javaPath + "\\Msg" +msgDef.getRsp_id()+ ".java")), "utf-8"));
+			        	File rspMsgFile = new File(javaPath + "\\Msg" +msgDef.getRsp_id()+ ".java");
+			            out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(rspMsgFile), "utf-8"));
+			            files.add(rspMsgFile);
 			        } catch (Exception e1) {
 			            e1.printStackTrace();
 			        }
@@ -99,6 +107,7 @@ public class MsgMgr {
 		} catch (TemplateException e) {
 			e.printStackTrace();
 		}
+		return files;
 	}
 
 	/** 保存消息定义到DB **/
