@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.msg.mgr.MsgMgr;
 import com.msg.util.HttpHelpler;
-import com.msg.util.LogUtil;
 
 /**
  * 删除消息
@@ -34,7 +33,6 @@ public class DelMessageServlet extends HttpServlet {
 		Integer msgId = Integer.valueOf(HttpHelpler.getParameterOrDefault(request, "msg_id", "0"));
 		if (msgId > 0) {
 			MsgMgr.getInstance().delMsg(msgId);
-			LogUtil.info("del msgId:" +msgId);//TODO syso
 		}
 	}
 	

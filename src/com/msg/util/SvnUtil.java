@@ -27,10 +27,10 @@ import org.tmatesoft.svn.core.wc.SVNWCUtil;
 public class SvnUtil {
 
 	private static SVNClientManager svnClientManager;
-	
+
 	public static void init() {
 		LogUtil.console.info("---------------------初始化svn配置----------------");
-		
+
 		// 1.根据访问协议初始化工厂
 		SVNRepositoryFactoryImpl.setup();
 		// 2.使用默认选项
@@ -39,16 +39,16 @@ public class SvnUtil {
 		ISVNAuthenticationManager isvnAuthenticationManager = SVNWCUtil.createDefaultAuthenticationManager(ConfigHelper.getCfgVal("svn.user"), ConfigHelper.getCfgVal("svn.pwd").toCharArray());
 		// 4.创建SVNClientManager的实例
 		svnClientManager = SVNClientManager.newInstance(isvnOptions, isvnAuthenticationManager);
-		
+
 		if (!isChecked(ConfigHelper.getCfgVal("gen.java.path"))) {
 			LogUtil.info(ConfigHelper.getCfgVal("gen.java.path") + " 尚未检出!");
-			checkOut(ConfigHelper.getCfgVal("svn.url"), ConfigHelper.getCfgVal("localPath"));
+			checkOut(ConfigHelper.getCfgVal("svn.url"), ConfigHelper.getCfgVal("gen.java.path"));
 		} else {
 			LogUtil.info(ConfigHelper.getCfgVal("gen.java.path") + " 已经检出!");
 		}
 	}
-	
-	/** 判断当前路径svn 是否已经检出  **/
+
+	/** 判断当前路径svn 是否已经检出 **/
 	public static boolean isChecked(String path) {
 		File file = new File(path);
 		if (file != null && file.isDirectory()) {
@@ -62,12 +62,12 @@ public class SvnUtil {
 	}
 
 	public static void main(String[] args) throws SVNException {
-		
+
 	}
 
 	/** svn检出 **/
 	public static void checkOut(String svnUrl, String localPath) {
-		LogUtil.console.info("svn checkout ing.....");
+		LogUtil.console.info("svn checkout ing..... svrUrl:" + svnUrl + " localPath:" + localPath);
 		try {
 			long nowRevision = svnClientManager.getUpdateClient().doCheckout(SVNURL.parseURIEncoded(svnUrl), new File(localPath), SVNRevision.HEAD, SVNRevision.HEAD, SVNDepth.INFINITY, true);
 			LogUtil.info("svn 检出版本:" + nowRevision);
@@ -105,7 +105,7 @@ public class SvnUtil {
 		} catch (Exception e) {
 			LogUtil.console.error("svn commit err!", e);
 		}
-		
+
 	}
 
 	/**
@@ -117,14 +117,29 @@ public class SvnUtil {
 		svnClientManager.getUpdateClient().doUpdate(file, SVNRevision.HEAD, SVNDepth.INFINITY, true, false);
 		LogUtil.info("snv update >> " + file.getName());
 	}
+
+	/**
+	 * 删除-delete
+	 * 
+	 * @throws SVNException
+	 */
+	public static void delete(String[] path) {
+		if (path == null || path.length <= 0) {
+			return;
+		}
+		
+		try {
+			SVNURL[] array = new SVNURL[path.length];
+			for (int i = 0; i < path.length; i++) {
+				array[i] =  SVNURL.parseURIEncoded(path[i]);
+			}
+			SVNCommitInfo svnCommitInfo = svnClientManager.getCommitClient().doDelete(array, "message up");
+			LogUtil.info("删除  >>" + JsonHelper.toS(svnCommitInfo));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	
-	 /**
-     * 删除-delete
-     * @throws SVNException
-     */
-    public static void delete() throws SVNException{
-        SVNCommitInfo svnCommitInfo = svnClientManager.getCommitClient().doDelete(new SVNURL[]{SVNURL.parseURIEncoded("https://wlyfree-PC:8443/svn/testRepository/trunk/bbb"),SVNURL.parseURIEncoded("https://wlyfree-PC:8443/svn/testRepository/trunk/b.txt")},"执行删除操作，删除一个目录bbb一个文件b.txt");
-        LogUtil.info("删除  >>" + JsonHelper.toS(svnCommitInfo));
-    }
-    
+	}
+
 }

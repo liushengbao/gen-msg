@@ -16,6 +16,7 @@ import com.msg.bean.MsgDef;
 import com.msg.bean.MsgField;
 import com.msg.util.ConfigHelper;
 import com.msg.util.FreemarkHelper;
+import com.msg.util.LogUtil;
 import com.msg.util.SvnUtil;
 import com.msg.vo.MsgCatItem;
 import com.msg.vo.MsgItem;
@@ -42,17 +43,17 @@ public class MsgMgr {
 		handleFiles();
 		saveMsgDefsToDB();
 	}
-	
+
 	/** 写入文件 >> 例如Msg1010101.java **/
 	public void handleFiles() {
 		List<MsgDef> list = CacheMgr.getInstance().getModifyMsgDefs().values().stream().collect(Collectors.toList());
-		
+
 		List<File> javaFiles = writeJava(list);
 		if (!javaFiles.isEmpty()) {
 			SvnUtil.commit(javaFiles);
 		}
 	}
-	
+
 	/** 写入.java的逻辑 **/
 	private List<File> writeJava(List<MsgDef> list) {
 		List<File> files = new ArrayList<>();
@@ -69,13 +70,13 @@ public class MsgMgr {
 				root.put("reqId", msgDef.getReq_id());
 				root.put("fields", msgDef.getReqBodys());
 				Template temp = cfg.getTemplate("JavaMsgTemplate.ftl");
-				File reqMsgFile = new File(javaPath + "\\Msg" +msgDef.getReq_id()+ ".java");
-		        Writer out = null;
-		        try {
-		            out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(reqMsgFile), "utf-8"));
-		        } catch (Exception e1) {
-		            e1.printStackTrace();
-		        }
+				File reqMsgFile = new File(javaPath + "\\Msg" + msgDef.getReq_id() + ".java");
+				Writer out = null;
+				try {
+					out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(reqMsgFile), "utf-8"));
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
 				temp.process(root, out);
 				out.close();
 				files.add(reqMsgFile);
@@ -88,15 +89,15 @@ public class MsgMgr {
 					root.put("desc", msgDef.getMsg_desc());
 					root.put("reqId", msgDef.getRsp_id());
 					root.put("fields", msgDef.getRspBodys());
-					
+
 					temp = cfg.getTemplate("JavaMsgTemplate.ftl");
-			        try {
-			        	File rspMsgFile = new File(javaPath + "\\Msg" +msgDef.getRsp_id()+ ".java");
-			            out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(rspMsgFile), "utf-8"));
-			            files.add(rspMsgFile);
-			        } catch (Exception e1) {
-			            e1.printStackTrace();
-			        }
+					try {
+						File rspMsgFile = new File(javaPath + "\\Msg" + msgDef.getRsp_id() + ".java");
+						out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(rspMsgFile), "utf-8"));
+						files.add(rspMsgFile);
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
 					temp.process(root, out);
 					out.close();
 				}
@@ -116,8 +117,8 @@ public class MsgMgr {
 		DBMgr.getInstance().updateMsgDefs(list);
 		CacheMgr.getInstance().getModifyMsgDefs().clear();
 	}
-	
-	/** 添加类别  **/
+
+	/** 添加类别 **/
 	public void addCat(MsgCat msgCat) {
 		if (!CacheMgr.getInstance().getMsgCatNames().containsKey(msgCat.getMsg_cat())) {
 			DBMgr.getInstance().addMsgCat(msgCat);
@@ -138,12 +139,12 @@ public class MsgMgr {
 			root.put("author", "autoMake");
 			Template temp = cfg.getTemplate("test.ftl");
 			File outFile = new File("E:\\workspace-oxygen\\gen-msg\\WebContent\\gen\\test.java");
-	        Writer out = null;
-	        try {
-	            out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFile), "utf-8"));
-	        } catch (Exception e1) {
-	            e1.printStackTrace();
-	        }
+			Writer out = null;
+			try {
+				out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFile), "utf-8"));
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 			temp.process(root, out);
 		} catch (IOException e1) {
 			e1.printStackTrace();
@@ -154,7 +155,7 @@ public class MsgMgr {
 
 	public List<MsgCatItem> getCatItems() {
 		List<MsgCatItem> collect = CacheMgr.getInstance().getMsgCats().values().stream().map(v -> MsgCatItem.valueOf(v)).collect(Collectors.toList());
-		List<MsgDef> msgDefs = CacheMgr.getInstance().getMsgDefs().values().stream().sorted((a,b) -> Integer.compare(a.getReq_id(), b.getReq_id())).collect(Collectors.toList());
+		List<MsgDef> msgDefs = CacheMgr.getInstance().getMsgDefs().values().stream().sorted((a, b) -> Integer.compare(a.getReq_id(), b.getReq_id())).collect(Collectors.toList());
 		for (MsgCatItem item : collect) {
 			boolean firstName = false;
 			for (MsgDef msgDef : msgDefs) {
@@ -165,12 +166,12 @@ public class MsgMgr {
 						firstName = true;
 					}
 				}
-				
+
 			}
 		}
 		return collect;
 	}
-	
+
 	public MsgItem getMsgItem(final int msgId) {
 		MsgDef msgDef = CacheMgr.getInstance().getMsgDefs().values().stream().filter(v -> v.getMsg_id() == msgId).findFirst().orElse(null);
 		if (msgDef != null) {
@@ -178,7 +179,7 @@ public class MsgMgr {
 		}
 		return null;
 	}
-	
+
 	public String getFieldTypeShowStr(MsgField field) {
 		if (field.getFt().equals("array")) {
 			return field.getFt() + "<" + field.getFv() + ">";
@@ -190,9 +191,23 @@ public class MsgMgr {
 	}
 
 	public void delMsg(Integer msgId) {
+		// 内存删除
 		CacheMgr.getInstance().getModifyMsgDefs().remove(msgId);
-		CacheMgr.getInstance().getMsgDefs().remove(msgId);
+		MsgDef msgDef = CacheMgr.getInstance().getMsgDefs().remove(msgId);
+		// 数据库删除
 		DBMgr.getInstance().delMsg(msgId);
+		// svn删除
+		if (msgDef != null) {
+			String delReqMsg = ConfigHelper.getCfgVal("svn.url") + "/Msg" + msgDef.getReq_id() + ".java";
+			SvnUtil.delete(new String[] {delReqMsg});
+			LogUtil.info("删除的文件svnUrl:" + delReqMsg);
+			
+			if (msgDef.getRsp_id() > 0) {
+				String delRspMsg = ConfigHelper.getCfgVal("svn.url") + "/Msg" + msgDef.getRsp_id() + ".java";
+				SvnUtil.delete(new String[] {delRspMsg});
+				LogUtil.info("删除的文件svnUrl:" + delRspMsg);
+			}
+		}
 	}
-	
+
 }
