@@ -6,17 +6,34 @@
 <html>
 <head>
 <style type="text/css">
-	div.msg_left a {
-		font-family:sans-serif;
-		font-size:14px;
-		color:#1E90FF;
-	}
-	div.msg_left p {
-		font-family:sans-serif;
-		font-size:13px;
-		display: inline;
-		color:#87CEEB;
-	}
+a {
+	font-size: 13px;
+	color: #000000;
+	text-decoration: none;
+}
+
+a:link {
+	text-decoration: none;
+	color: #000000;
+}
+
+a:active {
+	font-size: 13px;
+	color: #000000;
+	text-decoration: none;
+}
+
+a:hover {
+	font-size: 13px;
+	color: #000000;
+	text-decoration: none;
+}
+
+p {
+	font-size: 13px;
+	display: inline;
+	color: #000000;
+}
 </style>
 </head>
 
@@ -47,41 +64,59 @@
 	});
 </script>
 <body>
-	<div style="overflow: scroll;" class="msg_left">
+	<div style="overflow: scroll;">
 		<table>
-			<!-- 标头内容 -->
-			<thead>
+			<tr>
+				<td style="padding: 5px 0px 3px 0;"><p style="color: #696969; font-size: 14px">游戏:</p></td>
+				<td style="padding: 5px 0px 3px 0;">
+				<select name="game" style="width: 200px;">
+					<option>古剑</option>
+				</select></td>
+			</tr>
+			<tr>
+				<td style="padding: 5px 0px 3px 0;"><p style="color: #696969; font-size: 14px">版本:</p></td>
+				<td style="padding: 5px 0px 3px 0;">
+				<select name="version" style="width: 200px;">
+					<option>main</option>
+				</select></td>
+			</tr>
+		</table>
+		<div>
+			<p style="display: inline;">消息号搜索:</p>
+			<input type="text" style="width: 200px;"> 
+			<button type="button" class="btn btn-secondary btn-sm">搜索</button>
+		</div>
+		<table>
+			<tbody>
 				<tr>
 					<td style="width: 31px; padding: 5px 0px 3px 0;"></td>
-					<td style="padding: 5px 0px 3px 0;"><p style="color:#696969;font-size:16px">分类名称</p></td>
+					<td style="padding: 5px 0px 3px 0;"><p style="color: #696969; font-size: 14px">分类名称</p></td>
 				</tr>
-			</thead>
+			</tbody>
 
 			<!--显示分类数据-->
 			<c:forEach items="${MsgMgr.getInstance().getCatItems()}" var="cat">
-				<tbody id="group_${cat.msg_cat_id}">
+				<tbody id="group_${cat.msg_cat_id}'">
 					<tr>
 						<td style="width: 31px; padding: 1px 0px 1px 0;"><a href="javascript:;" id="a_${cat.msg_cat_id}" class="msg_show">[+]</a><a href="javascript:;" id="h_${cat.msg_cat_id}" class="msg_hide" style="display: none;">[ - ]</a></td>
-						<td style="width: 287px; padding: 1px 2px 1px 0;"><a href="javascript:;">${cat.msg_cat}</a>--<p>${cat.firstMsgName}</p><a href="">删除</a></td>
+						<td style="width: 287px; padding: 1px 2px 1px 0;"><a href="javascript:;">${cat.msg_cat}</a>--
+							<p>${cat.firstMsgName}</p> <a href="javascript:;">删除</a></td>
 					</tr>
 				</tbody>
-			
 				<tbody id="group_msg_${cat.msg_cat_id}" style="display: none;">
 					<c:forEach items="${cat.items}" var="msg">
-						<tr>
-							<td style="padding:1px 0px 1px 0;">&nbsp;</td>
+					<tr>
+						<td style="padding: 1px 0px 1px 0;">&nbsp;</td>
 							<td>
-				                <div>
-				                    <a style="float:left;" id="" href="javascript:;" onclick="show_msg(${msg.msg_id})">${msg.req_id}--${msg.msg_desc}</a>
-				                    <a href="javascript:;" onclick="edit_msg(${msg.msg_id})" style="float:left;margin-left: 20px;">编辑</a>
-				                    <a href="javascript:;" onclick="del_msg(${msg.msg_id})" style="float:left;margin-left: 5px;">删除</a>
-				                </div>
-	            			</td>
-						</tr>
+								<a style="float: left;" href="javascript:;" onclick="show_msg(${msg.msg_id})">${msg.req_id}--${msg.msg_desc}</a> <a href="javascript:;" onclick="edit_msg(${msg.msg_id})" style="float: left; margin-left: 20px;">编辑</a> <a href="javascript:;" onclick="del_msg(${msg.msg_id})" style="float: left; margin-left: 5px;">删除</a>
+							</td>
+					</tr>
 					</c:forEach>
-				</tbody>	
-		 </c:forEach>
-		
+				</tbody>
+			</c:forEach>
+			
+			
+
 		</table>
 
 	</div>

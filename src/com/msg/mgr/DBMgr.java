@@ -67,7 +67,11 @@ public class DBMgr {
 		return Collections.emptyList();
 	}
 
-	public void updateMsgDefs(List<MsgDef> list) {
+	/** 
+	 * 保存消息定义
+	 * @param list
+	 */
+	public void saveMsgDefs(List<MsgDef> list) {
 		if (list.isEmpty()) {
 			return;
 		}
@@ -76,13 +80,11 @@ public class DBMgr {
 		QueryRunner run = new QueryRunner();
 		try {
 			for (MsgDef msgDef : list) {
-				System.out.println("更新的消息定义id:" + msgDef.getMsg_id() + " 是否更新旧的消息:" + CacheMgr.getInstance().getMsgDefs().containsKey(msgDef.getMsg_id()));// TODO syso
 				if (!CacheMgr.getInstance().getMsgDefs().containsKey(msgDef.getMsg_id())) {
 					run.update(conn, "insert into msg_info(msg_id,msg_cat,msg_desc,req_id,req_body,rsp_id,rsp_body,msg_note) values(?,?,?,?,?,?,?,?)", msgDef.getMsg_id(), msgDef.getMsg_cat(), msgDef.getMsg_desc(), msgDef.getReq_id(), JsonHelper.toS(msgDef.getReqBodys()), msgDef.getRsp_id(), JsonHelper.toS(msgDef.getRspBodys()), msgDef.getMsg_note());
 				} else {
 					run.update(conn, "update msg_info set msg_cat=?,msg_desc=?,req_id=?,req_body=?,rsp_id=?,rsp_body=?,msg_note=? where msg_id=?", msgDef.getMsg_cat(), msgDef.getMsg_desc(), msgDef.getReq_id(), JsonHelper.toS(msgDef.getReqBodys()), msgDef.getRsp_id(), JsonHelper.toS(msgDef.getRspBodys()), msgDef.getMsg_note(), msgDef.getMsg_id());
 				}
-				CacheMgr.getInstance().getMsgDefs().put(msgDef.getMsg_id(), msgDef);
 			}
 
 		} catch (SQLException e) {

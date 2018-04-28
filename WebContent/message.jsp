@@ -37,70 +37,81 @@
 		});
 	}
 	
-	/** 提交消息  **/
-	function submit_msg() {
-		var ok = validate();
-		if (ok) {
-			var data = $("#msg_form").serialize();
-			alert(data);
-			$.ajax({
-				type : "POST",
-				url : "update_msg",
-				data : data,// 序列化表单值
-				async : false,
-				error : function(request) {
-					alert("消息提交异常!");
-				},
-				success : function(data) {
-					alert("消息提交成功!");
-					window.location.href = window.location.href;
-				}
-			});
-		}
-	}
-	
 </script>
+<style type="text/css">
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	overflow: hidden;
+	height: 100%;
+}
+
+html {
+	height: 100%;
+}
+
+table {
+	width:100%;
+	height: 100%;
+}
+
+#msg_nav p {
+	font-size: 13px;
+	display: inline;
+}
+#msg_nav a {
+	font-size: 13px;
+	text-decoration: none;
+	color: #3366cc;
+}
+#msg_nav a:link {
+	text-decoration: none;
+	color: #3366cc;
+}
+
+#msg_nav a:active {
+	font-size: 13px;
+	text-decoration: none;
+	color: #3366cc;
+}
+
+#msg_nav a:hover {
+	font-size: 13px;
+	text-decoration: none;
+	color: #3366cc;
+}
+
+p {
+	font-size: 13px;
+	display: inline;
+	color: #3366cc;
+}
+</style>
 
 <body>
-	<div class="container" style="width: 1200px; height: auto; margin-left: 0px; padding-top: 5px;">
-		<div class="row">
-			<div class="col" style="font-size: 16px">
-				<p class="text-muted" style="display: inline;">消息号管理</p>
+	<table>
+		<tr>
+			<!-- 左侧消息栏 -->
+			<td style="height: 100%;width: 360px;">
+				<div style="float: left; width: 360px; height: 100%;">
+					<jsp:include page="message_left.jsp" flush="true" />
+				</div>
+			</td>
+			<!-- 消息显示,消息编辑区域  -->
+			<td>
+				<div id="msg_nav" >
+				<p class="text-muted" style="display: inline;padding: 0px 0px 0px 20px;">消息号管理</p>
 				<a href="javascript:;" onclick="add_cat()" style="margin-left: 5px">添加分类</a> 
 				<a href="javascript:;" onclick="add_msg()" style="margin-left: 5px">添加消息号</a>
 				<a href="javascript:;" onclick="" style="margin-left: 5px">添加结构体</a>
 				<a href="javascript:;" onclick="" style="margin-left: 5px">添加广播</a>
-			</div>
-		</div>
-
-		<div class="row" style="margin-top: 5px;">
-			<div class="col">
-				<p class="text-muted" style="display: inline;">消息号版本:</p>
-				<select id="server_id" name="server_id" style="color: #000000; width: 200px;">
-					<option value="main">main</option>
-				</select>
-				<button type="button" class="btn btn-secondary btn-sm">确定</button>
-			</div>
-		</div>
-
-		<div class="row" style="margin-top: 5px;">
-			<div class="col">
-				<p class="text-muted" style="display: inline;">消息号搜索:</p>
-				<input type="text" style="width: 200px;"> 
-				<button type="button" class="btn btn-secondary btn-sm">搜索</button>
-			</div>
-		</div>
-
-		<!-- 消息类目显示  -->
-		<div style="float: left; width: 360px; height: 1000px;">
-			<jsp:include page="message_left.jsp" flush="true" />
-		</div>
-
-		<!-- 消息编辑区域 -->
-		<div id="msg_edit" class="msg_edit" style="float: left;"></div>
-
-	</div>
-
+				</div>
+				<div id="msg_edit" class="msg_edit" style="float: left;height: 100%;"></div>
+			</td>
+		</tr>
+	</table>
 
 </body>
 </html>

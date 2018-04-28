@@ -7,16 +7,34 @@
 <script type="text/javascript" src="style/js/jquery-3.0.0.min.js"></script>
 <link href="style/css/bootstrap.min.css" rel="stylesheet">
 <script src="style/js/bootstrap.min.js"></script>
-<body>
-	<div style="width: 110px;">
-		<nav class="navbar navbar-expand-sm bg-light navbar-light">
-		<ul class="navbar-nav">
-			<li class="nav-item"><a href="home.jsp" target="main">首页</a></li>
-			<li class="nav-item"><a href="message.jsp" target="main">消息号</a></li>
-			<li class="nav-item"><a href="errorId.jsp" target="main">错误号</a></li>
-		</ul>
-		</nav>
-	</div>
+<style type="text/css">
+.nav ul {
+	margin: 0;
+	padding: 0;
+	line-height: 2em;
+}
 
+.nav a {
+	display: block;
+	width: 10em;
+	text-align: center;
+	text-decoration: none;
+	font-size: 14px;
+}
+
+.nav a:hover {
+	background-color: #F5DEB3;
+	font-size: 15px;
+}
+
+</style>
+<body>
+	<div class="nav">
+		<ul>
+			<li><a href="home.jsp" target="main">首页</a></li>
+			<li><a href="message.jsp" target="main">消息号</a></li>
+			<li><a href="errorId.jsp" target="main">错误号</a></li>
+		</ul>
+	</div>
 </body>
 </html>

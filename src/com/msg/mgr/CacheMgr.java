@@ -27,6 +27,8 @@ public class CacheMgr {
 	private ConcurrentHashMap<Integer, MsgCat> msgCats = new ConcurrentHashMap<>();
 	/** 消息类别名字  **/
 	private ConcurrentHashMap<String, Integer> msgCatNames = new ConcurrentHashMap<>();
+	/** 删除的消息定义 **/
+	private ConcurrentHashMap<Integer, MsgDef> delMsgDefs = new ConcurrentHashMap<>();
 	
 	/** 初始化  **/
 	public void init() {
@@ -66,6 +68,10 @@ public class CacheMgr {
 	
 	public ConcurrentHashMap<String, Integer> getMsgCatNames() {
 		return msgCatNames;
+	}
+	
+	public ConcurrentHashMap<Integer, MsgDef> getDelMsgDefs() {
+		return delMsgDefs;
 	}
 	
 }

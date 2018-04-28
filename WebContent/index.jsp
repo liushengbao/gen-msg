@@ -11,67 +11,41 @@
 <link href="style/css/bootstrap.min.css" rel="stylesheet">
 <script src="style/js/bootstrap.min.js"></script>
 <script type="text/javascript">
-/** 验证表单  **/
-function validate() {
-	if (!isReqNumber($("#req_id").val())) {
-		return false;
-	}
-	if (isNullStr($("#msg_desc").val())) {
-		alert("消息描述不能为空!");
-		return false;
-	}
-	return true;
-}
 
-function isNullStr(a) {
-	if (a == null || a == "") {
-		return true;
-	}
-	return false;
-}
-
-/** 是否为纯数字  **/
-function isReqNumber(value) {
-	var reg = new RegExp("^[0-9]*$");
-	if (!reg.test(value)) {
-		alert("消息号必须存数字!");
-		return false;
-	}
-	if (value > 9999999) {
-		alert("消息号不能大于9999999")
-		return false;
-	}
-	if (value < 1000000) {
-		alert("消息号不能小于1000000")
-		return false;
-	}
-	return true;
-}
 </script>
-<style>
+<style type="text/css">
 body {
 	margin-left: 0px;
 	margin-top: 0px;
 	margin-right: 0px;
 	margin-bottom: 0px;
 	overflow: hidden;
-	height:100%
+	height: 100%;
 }
+
 html {
-	height:100%
+	height: 100%;
 }
+
+table {
+	width:100%;
+	height: 100%;
+}
+
+
 </style>
 
 <body>
-	<div class="row" style="height:100%;">
-		<div class="col-1">
-			<!-- 垂直导航栏 -->
-			<iframe src="menu.jsp" name="menu" width="150" height="100%" frameborder="0" scrolling="no"></iframe>
-		</div>
-		<div class="col">
-			<iframe src="home.jsp" name="main" width="100%" height="100%" frameborder="0" scrolling="yes" style="overflow: scroll;"></iframe>
-		</div>
-	</div>
+	<table>
+		<tr>
+			<td style="height: 100%;width: 150px;">
+				<iframe src="menu.jsp" name="menu" width="100%" height="100%" frameborder="0" scrolling="no"></iframe>
+			</td>
+			<td style="height: 100%;">
+ 				<iframe src="home.jsp" name="main" width="100%" height="100%" frameborder="0" scrolling="no"></iframe>
+			</td>
+		</tr>
+	</table>
 </body>
 
 </html>

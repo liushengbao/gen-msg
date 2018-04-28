@@ -16,16 +16,19 @@
 </script>
 <style type="text/css">
 #customers {
-	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-	width: 100%;
+	width: 500px;
+	border: 0px;
 	border-collapse: collapse;
+	border-spacing: 0;
 }
+
 #customers tr {
-	border:1px solid #DDD;height:24px;line-height:24px;
+	height: 30px;
+	width: 500px;
+	border-bottom: 1px dashed #BBB;
 }
-#customers td {
-	font-size: 1em;
-}
+
+
 </style>
 </head>
 
@@ -42,7 +45,7 @@
 	<c:if test="${msgItem != null}">
 		<table id="customers">
 		    <tbody>
-			    <tr style="border:1px solid #DDD;height:24px;line-height:24px;">
+			    <tr>
 			        <td colspan="4" style="color:#777;padding:2px;">消息号详情：</td>
 			    </tr>
 		 	</tbody>
@@ -55,19 +58,19 @@
 			<tbody>
 				<tr>
 					<td>请求消息号:${msgItem.req_id}</td>
-					<td>返回::${msgItem.rsp_id}</td>
+					<td>返回:${msgItem.rsp_id}</td>
 				</tr>
 		    </tbody>
 		    <tbody>
-				  <tr style="background-color:#F1F1F1;">
+				  <tr style="height:30px;width:500px;background-color:#F1F1F1;">
         			<td colspan="4" style="padding-left:8px;">备注</td>
     			  </tr>
-    			  <tr>
+    			  <tr>	
 					<td>:<c:if test="${msgItem.msg_note != null}">${msgItem.msg_note}</c:if></td>
 				  </tr>
 		    </tbody>
 		    <tbody>
-		     <tr style="border:1px solid #DDD;height:24px;line-height:24px;background-color:#F1F1F1;">
+		     <tr style="height:24px;line-height:24px;background-color:#F1F1F1;">
 			        <td colspan="4" style="color:#777;padding:2px;">请求消息体：</td>
 			 </tr>
 	     	<c:forEach items="${msgItem.reqFields}" var="field">
@@ -91,7 +94,7 @@
 		    </tbody>
 		    
 		    <tbody>
-		    <tr style="border:1px solid #DDD;height:24px;line-height:24px;background-color:#F1F1F1;">
+		    <tr style="height:24px;line-height:24px;background-color:#F1F1F1;">
 			        <td colspan="4" style="color:#777;padding:2px;">返回消息体：</td>
 			 </tr>
 	     	<c:forEach items="${msgItem.rspFields}" var="field">

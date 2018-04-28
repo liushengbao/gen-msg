@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,8 +24,13 @@ import com.msg.vo.MsgItem;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
-import freemarker.template.TemplateExceptionHandler;
 
+/**
+ * 消息管理类
+ * 
+ * @author shengbao.Liu
+ *
+ */
 public class MsgMgr {
 
 	private static final MsgMgr instance = new MsgMgr();
@@ -35,11 +41,18 @@ public class MsgMgr {
 
 	/** 添加修改了的消息定义 **/
 	public void addModifyMsgDef(MsgDef msgDef) {
-		CacheMgr.getInstance().getModifyMsgDefs().put(msgDef.getMsg_id(), msgDef);
+		synchronized (CacheMgr.getInstance().getModifyMsgDefs()) {
+			CacheMgr.getInstance().getModifyMsgDefs().put(msgDef.getMsg_id(), msgDef);
+			CacheMgr.getInstance().getMsgDefs().put(msgDef.getMsg_id(), msgDef);
+		}
 	}
-
+	
 	/** 提交修改 **/
 	public void submit() {
+		//先处理删除
+		List<MsgDef> delMsgDefs = CacheMgr.getInstance().getDelMsgDefs().values().stream().collect(Collectors.toList());
+		delMsgFile(delMsgDefs);
+		//再处理添加，修改
 		handleFiles();
 		saveMsgDefsToDB();
 	}
@@ -58,7 +71,7 @@ public class MsgMgr {
 	private List<File> writeJava(List<MsgDef> list) {
 		List<File> files = new ArrayList<>();
 		Configuration cfg = FreemarkHelper.getCfg();
-		String javaPath = ConfigHelper.getCfgVal("gen.java.dir");
+		String javaPath = ConfigHelper.getCfgVal("gen.java.path");
 		try {
 			for (MsgDef msgDef : list) {
 				Map<String, Object> root = new HashMap<String, Object>();
@@ -113,9 +126,13 @@ public class MsgMgr {
 
 	/** 保存消息定义到DB **/
 	public void saveMsgDefsToDB() {
-		List<MsgDef> list = CacheMgr.getInstance().getModifyMsgDefs().values().stream().collect(Collectors.toList());
-		DBMgr.getInstance().updateMsgDefs(list);
-		CacheMgr.getInstance().getModifyMsgDefs().clear();
+		synchronized (CacheMgr.getInstance().getModifyMsgDefs()) {
+			List<MsgDef> list = CacheMgr.getInstance().getModifyMsgDefs().values().stream().collect(Collectors.toList());
+			//保存到数据库
+			DBMgr.getInstance().saveMsgDefs(list);
+			//清空
+			CacheMgr.getInstance().getModifyMsgDefs().clear();
+		}
 	}
 
 	/** 添加类别 **/
@@ -125,34 +142,8 @@ public class MsgMgr {
 			CacheMgr.getInstance().loadMsgCat();
 		}
 	}
-
-	public static void main(String[] args) {
-		Configuration cfg = new Configuration(Configuration.VERSION_2_3_22);
-		try {
-			cfg.setDirectoryForTemplateLoading(new File("E:\\workspace-oxygen\\gen-msg\\WebContent\\ftl\\"));
-			cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-
-			Map<String, Object> root = new HashMap<String, Object>();
-
-			root.put("packageName", "co");
-			root.put("className", "Msg1010101");
-			root.put("author", "autoMake");
-			Template temp = cfg.getTemplate("test.ftl");
-			File outFile = new File("E:\\workspace-oxygen\\gen-msg\\WebContent\\gen\\test.java");
-			Writer out = null;
-			try {
-				out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFile), "utf-8"));
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-			temp.process(root, out);
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		} catch (TemplateException e) {
-			e.printStackTrace();
-		}
-	}
-
+	
+	/** 获取客户端显示的类别 **/
 	public List<MsgCatItem> getCatItems() {
 		List<MsgCatItem> collect = CacheMgr.getInstance().getMsgCats().values().stream().map(v -> MsgCatItem.valueOf(v)).collect(Collectors.toList());
 		List<MsgDef> msgDefs = CacheMgr.getInstance().getMsgDefs().values().stream().sorted((a, b) -> Integer.compare(a.getReq_id(), b.getReq_id())).collect(Collectors.toList());
@@ -172,6 +163,7 @@ public class MsgMgr {
 		return collect;
 	}
 
+	/** 获取客户端消息  **/
 	public MsgItem getMsgItem(final int msgId) {
 		MsgDef msgDef = CacheMgr.getInstance().getMsgDefs().values().stream().filter(v -> v.getMsg_id() == msgId).findFirst().orElse(null);
 		if (msgDef != null) {
@@ -190,23 +182,59 @@ public class MsgMgr {
 		}
 	}
 
-	public void delMsg(Integer msgId) {
-		// 内存删除
-		CacheMgr.getInstance().getModifyMsgDefs().remove(msgId);
-		MsgDef msgDef = CacheMgr.getInstance().getMsgDefs().remove(msgId);
-		// 数据库删除
-		DBMgr.getInstance().delMsg(msgId);
-		// svn删除
-		if (msgDef != null) {
-			String delReqMsg = ConfigHelper.getCfgVal("svn.url") + "/Msg" + msgDef.getReq_id() + ".java";
-			SvnUtil.delete(new String[] {delReqMsg});
-			LogUtil.info("删除的文件svnUrl:" + delReqMsg);
-			
-			if (msgDef.getRsp_id() > 0) {
-				String delRspMsg = ConfigHelper.getCfgVal("svn.url") + "/Msg" + msgDef.getRsp_id() + ".java";
-				SvnUtil.delete(new String[] {delRspMsg});
-				LogUtil.info("删除的文件svnUrl:" + delRspMsg);
+	public void delMsg(Integer... list) {
+		List<MsgDef> delMsgDefs = delServerMsg(Arrays.asList(list));
+		if (!delMsgDefs.isEmpty()) {
+			delMsgDefs.forEach(v -> CacheMgr.getInstance().getDelMsgDefs().put(v.getMsg_id(), v));
+		}
+	}
+
+	public List<MsgDef> delServerMsg(List<Integer> list) {
+		List<MsgDef> dels = new ArrayList<>();
+		for (Integer msgId : list) {
+			// 内存删除
+			CacheMgr.getInstance().getModifyMsgDefs().remove(msgId);
+			MsgDef msgDef = CacheMgr.getInstance().getMsgDefs().remove(msgId);
+			if (msgDef != null) {
+				dels.add(msgDef);
 			}
+			// 数据库删除
+			DBMgr.getInstance().delMsg(msgId);
+		}
+		return dels;
+	}
+
+	public void delMsgFile(List<MsgDef> list) {
+		List<String> batDels = new ArrayList<>();
+		for (MsgDef msgDef : list) {
+			// svn删除
+			if (msgDef != null) {
+				// 本地文件库删除
+				File delReqFile = new File(ConfigHelper.getCfgVal("gen.java.path")  + "/Msg" + msgDef.getReq_id() + ".java");
+				if (delReqFile != null && delReqFile.isFile()) {
+					delReqFile.delete();
+				}
+				
+				String delReqMsg = ConfigHelper.getCfgVal("svn.url") + "/Msg" + msgDef.getReq_id() + ".java";
+				LogUtil.info("删除的文件svnUrl:" + delReqMsg);
+				batDels.add(delReqMsg);
+				
+				if (msgDef.getRsp_id() > 0) {
+					// 本地文件库删除
+					File delRspFile = new File(ConfigHelper.getCfgVal("gen.java.path")  + "/Msg" + msgDef.getRsp_id() + ".java");
+					if (delRspFile != null && delRspFile.isFile()) {
+						delRspFile.delete();
+					}
+					
+					String delRspMsg = ConfigHelper.getCfgVal("svn.url") + "/Msg" + msgDef.getRsp_id() + ".java";
+					LogUtil.info("删除的文件svnUrl:" + delRspMsg);
+					batDels.add(delRspMsg);
+				}
+			}
+		}
+		if (!batDels.isEmpty()) {
+			SvnUtil.delete(batDels.toArray(new String[0]));
+			LogUtil.info("删除svn 库文件成功!");
 		}
 	}
 

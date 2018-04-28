@@ -6,12 +6,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.msg.bean.MsgCat;
 import com.msg.mgr.MsgMgr;
 import com.msg.util.HttpHelpler;
 import com.msg.util.IdHelper;
-import com.msg.util.JsonHelper;
 
 /**
  * 添加分类
@@ -40,7 +38,6 @@ public class AddCatServlet extends HttpServlet {
 		msgCat.setMsg_cat(catName);
 		msgCat.setMsg_cat_type(Integer.valueOf(catType));
 		MsgMgr.getInstance().addCat(msgCat);
-		System.out.println(JsonHelper.toS(msgCat));//TODO syso
 	}
 
 	/**
