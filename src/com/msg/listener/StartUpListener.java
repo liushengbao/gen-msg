@@ -31,8 +31,11 @@ public class StartUpListener implements ServletContextListener {
 			CacheMgr.getInstance().init();
 			// 模板引擎加载配置
 			FreemarkHelper.init(sce.getServletContext());
+			
 			// svn初始化
-			SvnUtil.init();
+			if (ConfigHelper.getCfgVal("svn.open", "true").equals("true")) {
+				SvnUtil.init();
+			}
 			
 			LogUtil.console.info(">>>>>>>>>启动完毕>>>>>>>>>");
 		}).start();;

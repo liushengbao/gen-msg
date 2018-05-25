@@ -43,6 +43,7 @@ public class MsgMgr {
 	public void addModifyMsgDef(MsgDef msgDef) {
 		synchronized (CacheMgr.getInstance().getModifyMsgDefs()) {
 			CacheMgr.getInstance().getModifyMsgDefs().put(msgDef.getMsg_id(), msgDef);
+			//FIXME ....
 			CacheMgr.getInstance().getMsgDefs().put(msgDef.getMsg_id(), msgDef);
 		}
 	}
@@ -51,10 +52,16 @@ public class MsgMgr {
 	public void submit() {
 		//先处理删除
 		List<MsgDef> delMsgDefs = CacheMgr.getInstance().getDelMsgDefs().values().stream().collect(Collectors.toList());
-		delMsgFile(delMsgDefs);
-		//再处理添加，修改
-		handleFiles();
+		if (ConfigHelper.getCfgVal("svn.open", "true").equals("true")) {
+			delMsgFile(delMsgDefs);
+		}
+		if (ConfigHelper.getCfgVal("svn.open", "true").equals("true")) {
+			//再处理添加，修改
+			handleFiles();
+		}
 		saveMsgDefsToDB();
+		//清空
+		CacheMgr.getInstance().getModifyMsgDefs().clear();
 	}
 
 	/** 写入文件 >> 例如Msg1010101.java **/
@@ -62,7 +69,6 @@ public class MsgMgr {
 		List<MsgDef> list = CacheMgr.getInstance().getModifyMsgDefs().values().stream().collect(Collectors.toList());
 
 		List<File> javaFiles = writeJava(list);
-		
 		if (!javaFiles.isEmpty()) {
 			SvnUtil.commit(javaFiles);
 		}
@@ -129,10 +135,9 @@ public class MsgMgr {
 	public void saveMsgDefsToDB() {
 		synchronized (CacheMgr.getInstance().getModifyMsgDefs()) {
 			List<MsgDef> list = CacheMgr.getInstance().getModifyMsgDefs().values().stream().collect(Collectors.toList());
+			System.out.println(list.size());
 			//保存到数据库
 			DBMgr.getInstance().saveMsgDefs(list);
-			//清空
-			CacheMgr.getInstance().getModifyMsgDefs().clear();
 		}
 	}
 

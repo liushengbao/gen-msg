@@ -95,7 +95,7 @@ public class UpdateMessageServlet extends HttpServlet {
 		// 添加修改的消息
 		MsgMgr.getInstance().addModifyMsgDef(msgDef);
 		// 由页面点击生成
-		//MsgMgr.getInstance().submit();
+		MsgMgr.getInstance().submit();
 	}
 
 	/**
