@@ -71,8 +71,6 @@
 					<input type="button" id="submit_msg" value="提交" class="btn btn-outline-primary">
 				</div>
 			</div>
-
-
 		</form>
 
 

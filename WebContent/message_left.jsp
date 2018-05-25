@@ -69,22 +69,22 @@ p {
 			<tr>
 				<td style="padding: 5px 0px 3px 0;"><p style="color: #696969; font-size: 14px">游戏:</p></td>
 				<td style="padding: 5px 0px 3px 0;">
-				<select name="game" style="width: 200px;">
+				<select name="game" style="height: 24px;width: 200px;">
 					<option>古剑</option>
-				</select></td>
+				</select>
+				</td>
 			</tr>
 			<tr>
 				<td style="padding: 5px 0px 3px 0;"><p style="color: #696969; font-size: 14px">版本:</p></td>
 				<td style="padding: 5px 0px 3px 0;">
-				<select name="version" style="width: 200px;">
+				<select name="version" style="height: 24px;width: 200px;">
 					<option>main</option>
 				</select></td>
 			</tr>
 		</table>
 		<div>
-			<p style="display: inline;">消息号搜索:</p>
-			<input type="text" style="width: 200px;"> 
-			<button type="button" class="btn btn-secondary btn-sm">搜索</button>
+			<p style="color: #696969; font-size: 14px">搜索:</p>
+			<input type="text" style="margin-left:10px;height: 24px;width: 200px;"> 
 		</div>
 		<table>
 			<tbody>

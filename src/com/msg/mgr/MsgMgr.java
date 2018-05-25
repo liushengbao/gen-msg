@@ -62,6 +62,7 @@ public class MsgMgr {
 		List<MsgDef> list = CacheMgr.getInstance().getModifyMsgDefs().values().stream().collect(Collectors.toList());
 
 		List<File> javaFiles = writeJava(list);
+		
 		if (!javaFiles.isEmpty()) {
 			SvnUtil.commit(javaFiles);
 		}

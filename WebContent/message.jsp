@@ -58,11 +58,11 @@ table {
 }
 
 #msg_nav p {
-	font-size: 13px;
+	font-size: 15px;
 	display: inline;
 }
 #msg_nav a {
-	font-size: 13px;
+	font-size: 15px;
 	text-decoration: none;
 	color: #3366cc;
 }
@@ -72,13 +72,13 @@ table {
 }
 
 #msg_nav a:active {
-	font-size: 13px;
+	font-size: 15px;
 	text-decoration: none;
 	color: #3366cc;
 }
 
 #msg_nav a:hover {
-	font-size: 13px;
+	font-size: 15px;
 	text-decoration: none;
 	color: #3366cc;
 }
@@ -91,7 +91,22 @@ p {
 </style>
 
 <body>
+	<!-- 消息导航 -->
+	<div id="msg_nav" style="margin-top: 2px;">
+		<p class="text-muted" style="display: inline;">消息号管理</p>
+		<a href="javascript:;" onclick="add_cat()" style="margin-left: 5px">添加分类</a> 
+		<a href="javascript:;" onclick="add_msg()" style="margin-left: 5px">添加消息号</a>
+		<a href="javascript:;" onclick="" style="margin-left: 5px">添加结构体</a>
+		<a href="javascript:;" onclick="" style="margin-left: 5px">添加广播</a>
+		<a href="javascript:;" onclick="" style="margin-left: 5px">提交协议</a>
+	</div>
+	
 	<table>
+		<tr>
+			<td>
+				
+			</td>
+		<tr>
 		<tr>
 			<!-- 左侧消息栏 -->
 			<td style="height: 100%;width: 360px;">
@@ -101,14 +116,7 @@ p {
 			</td>
 			<!-- 消息显示,消息编辑区域  -->
 			<td>
-				<div id="msg_nav" >
-				<p class="text-muted" style="display: inline;padding: 0px 0px 0px 20px;">消息号管理</p>
-				<a href="javascript:;" onclick="add_cat()" style="margin-left: 5px">添加分类</a> 
-				<a href="javascript:;" onclick="add_msg()" style="margin-left: 5px">添加消息号</a>
-				<a href="javascript:;" onclick="" style="margin-left: 5px">添加结构体</a>
-				<a href="javascript:;" onclick="" style="margin-left: 5px">添加广播</a>
-				</div>
-				<div id="msg_edit" class="msg_edit" style="float: left;height: 100%;"></div>
+				<div id="msg_edit" class="msg_edit" style="float: left;height: 100%;margin-top: 5px;"></div>
 			</td>
 		</tr>
 	</table>
