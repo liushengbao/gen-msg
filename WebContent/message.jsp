@@ -37,6 +37,14 @@
 		});
 	}
 	
+	/** 删除分类 **/
+	function del_cat($cat) {
+		$.get("del_cat", {cat_id:$cat}, function(data) {
+			alert("删除类别成功!");
+			window.location.href = window.location.href;
+		});
+	}
+	
 </script>
 <style type="text/css">
 body {

@@ -100,7 +100,7 @@ p {
 					<tr>
 						<td style="width: 31px; padding: 1px 0px 1px 0;"><a href="javascript:;" id="a_${cat.msg_cat_id}" class="msg_show">[+]</a><a href="javascript:;" id="h_${cat.msg_cat_id}" class="msg_hide" style="display: none;">[ - ]</a></td>
 						<td style="width: 287px; padding: 1px 2px 1px 0;"><a href="javascript:;">${cat.msg_cat}</a>--
-							<p>${cat.firstMsgName}</p> <a href="javascript:;">删除</a></td>
+							<p>${cat.firstMsgName}</p> <a href="javascript:;" onclick="del_cat(${cat.msg_cat_id})">删除</a></td>
 					</tr>
 				</tbody>
 				<tbody id="group_msg_${cat.msg_cat_id}" style="display: none;">

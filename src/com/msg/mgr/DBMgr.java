@@ -136,4 +136,16 @@ public class DBMgr {
 		}
 	}
 
+	public void delCat(Integer catId) {
+		Connection conn = getConnection();
+		QueryRunner run = new QueryRunner();
+		try {
+			run.execute(conn, "delete from msg_cat where msg_cat_id=?", catId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DbUtils.closeQuietly(conn);
+		}
+	}
+
 }
