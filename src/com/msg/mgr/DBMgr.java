@@ -80,15 +80,14 @@ public class DBMgr {
 		QueryRunner run = new QueryRunner();
 		try {
 			for (MsgDef msgDef : list) {
-				if (!CacheMgr.getInstance().getMsgDefs().containsKey(msgDef.getMsg_id())) {
+				if (msgDef.getModifyStatu() == MsgDef.MODIFY_INSERT) {
 					System.out.println("插入消息 " + msgDef.getMsg_id());//TODO syso
 					run.update(conn, "insert into msg_info(msg_id,msg_cat,msg_desc,req_id,req_body,rsp_id,rsp_body,msg_note) values(?,?,?,?,?,?,?,?)", msgDef.getMsg_id(), msgDef.getMsg_cat(), msgDef.getMsg_desc(), msgDef.getReq_id(), JsonHelper.toS(msgDef.getReqBodys()), msgDef.getRsp_id(), JsonHelper.toS(msgDef.getRspBodys()), msgDef.getMsg_note());
-				} else {
+				} else if (msgDef.getModifyStatu() == MsgDef.MODIFY_UPDATE) {
 					System.out.println("更新消息 " + msgDef.getMsg_id());//TODO syso
 					run.update(conn, "update msg_info set msg_cat=?,msg_desc=?,req_id=?,req_body=?,rsp_id=?,rsp_body=?,msg_note=? where msg_id=?", msgDef.getMsg_cat(), msgDef.getMsg_desc(), msgDef.getReq_id(), JsonHelper.toS(msgDef.getReqBodys()), msgDef.getRsp_id(), JsonHelper.toS(msgDef.getRspBodys()), msgDef.getMsg_note(), msgDef.getMsg_id());
 				}
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

@@ -21,6 +21,17 @@ public class MsgDef {
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	private List<MsgField> reqBodys = new ArrayList<>();
 	private List<MsgField> rspBodys = new ArrayList<>();
+	
+	//++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	/**
+	 * 修改状态:
+	 * 1:插入状态
+	 * 2:修改状态
+	 */
+	private transient int modifyStatu;
+	
+	public static int MODIFY_INSERT = 1; 
+	public static int MODIFY_UPDATE = 2;
 
 	public List<MsgField> getReqBodys() {
 		return reqBodys;
@@ -102,4 +113,11 @@ public class MsgDef {
 		this.msg_note = msg_note;
 	}
 	
+	public void setModifyStatu(int modifyStatu) {
+		this.modifyStatu = modifyStatu;
+	}
+	
+	public int getModifyStatu() {
+		return modifyStatu;
+	}
 }

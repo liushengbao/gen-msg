@@ -43,7 +43,11 @@ public class MsgMgr {
 	public void addModifyMsgDef(MsgDef msgDef) {
 		synchronized (CacheMgr.getInstance().getModifyMsgDefs()) {
 			CacheMgr.getInstance().getModifyMsgDefs().put(msgDef.getMsg_id(), msgDef);
-			//FIXME ....
+			if (CacheMgr.getInstance().getMsgDefs().containsKey(msgDef.getMsg_id())) {
+				msgDef.setModifyStatu(MsgDef.MODIFY_UPDATE);
+			} else {
+				msgDef.setModifyStatu(MsgDef.MODIFY_INSERT);
+			}
 			CacheMgr.getInstance().getMsgDefs().put(msgDef.getMsg_id(), msgDef);
 		}
 	}
@@ -60,6 +64,7 @@ public class MsgMgr {
 			handleFiles();
 		}
 		saveMsgDefsToDB();
+		
 		//清空
 		CacheMgr.getInstance().getModifyMsgDefs().clear();
 	}
@@ -135,7 +140,6 @@ public class MsgMgr {
 	public void saveMsgDefsToDB() {
 		synchronized (CacheMgr.getInstance().getModifyMsgDefs()) {
 			List<MsgDef> list = CacheMgr.getInstance().getModifyMsgDefs().values().stream().collect(Collectors.toList());
-			System.out.println(list.size());
 			//保存到数据库
 			DBMgr.getInstance().saveMsgDefs(list);
 		}
