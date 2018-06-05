@@ -114,6 +114,7 @@ p {
 							<c:if test="${msg.msg_cat_type == 2}">
 								<a style="float: left;" href="javascript:;" onclick="show_msg(${msg.msg_id})">${msg.msg_name}--${msg.msg_desc}</a>
 							</c:if>
+							
 								<a href="javascript:;" onclick="edit_msg(${msg.msg_id})" style="float: left; margin-left: 20px;">编辑</a> <a href="javascript:;" onclick="del_msg(${msg.msg_id})" style="float: left; margin-left: 5px;">删除</a>
 							</td>
 					</tr>

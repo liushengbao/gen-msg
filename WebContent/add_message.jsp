@@ -112,36 +112,55 @@
 		var rc = 0;
 		$("#add_req_btn").click(function() {
 			rc++;
-			$(".req-body").append('<span style="margin-left:5px;">'+rc+'</span>');
-			$(".req-body").append('<input type="text" style="display:none;" id="req_f_key_'+ rc + '" name="req_f_key_'+ rc + '">');
-			$(".req-body").append('<input type="text" style="display:none;" id="req_f_value_'+ rc + '" name="req_f_value_'+ rc + '">');
-			$(".req-body").append('<input type="text" style="display:none;" id="req_f_type_'+ rc + '" name="req_f_type_'+ rc + '">');
-			$(".req-body").append('<span style="margin-left:5px;">类型:</span>');
-			$(".req-body").append('<input style="width:100px;" name="req_f_type_show_'+rc+'" type="text" value="" id="req_f_type_show_'+ rc + '" onfocus="focus_edit_req('+rc+')" data-toggle="modal" data-target="#exampleModal"/>');
-			$(".req-body").append('<span style="margin-left:5px;">变量名:</span>');
-			$(".req-body").append('<input style="width:150px;" name="req_f_name_'+rc+'" type="text" value="" id="req_f_name_'+rc+'" />');
-			$(".req-body").append('<span style="margin-left:5px;">描述:</span>');
-			$(".req-body").append('<input id="req_f_desc_'+rc+'" name="req_f_desc_'+rc+'" type="text" value="" />');
-			$(".req-body").append('<a href="javascript:;" style="margin-left:10px;" id="req_f_def_'+rc+'" onclick=>删除</a>');
-			$(".req-body").append('<br/>');
+			var req_row = '<span style="margin-left:5px;">'+rc+'</span>' + 
+			'<span style="margin-left:5px;">类型:</span>' +
+			'<select name="req_f_type_'+rc+'" id="req_f_type_'+rc+'" style="width:120px;">' +
+			'<option value="base">base</option>' + 
+			'<option value="array&lt;v&gt;">array&lt;v&gt;</option>' +
+			'<option value="map&lt;int32,v&gt;">map&lt;int32,v&gt;</option>' +
+			'<option value="map&lt;int64,v&gt;">map&lt;int64,v&gt;</option>' +
+			'<option value="map&lt;string,v&gt;">map&lt;string,v&gt;</option>' +
+			'</select>'+
+			'<select name="req_f_value_'+rc+'" id="req_f_value_'+rc+'" style="width:100px;">' +
+			'<c:forEach items="${CacheMgr.getInstance().getStructs()}" var="struct">' +
+			'<option value="${struct}">${struct}</option>' +
+			'</c:forEach>' +
+			'</select>'+
+			'<span style="margin-left:5px;">变量名:</span>' +
+			'<input style="width:100px;" name="req_f_name_'+rc+'" type="text" value="" id="req_f_name_'+rc+'" />' +
+			'<span style="margin-left:5px;">描述:</span>' +
+			'<input id="req_f_desc_'+rc+'" name="req_f_desc_'+rc+'" type="text" value="" />' + 
+			'<a href="javascript:;" style="margin-left:10px;" id="req_f_def_'+rc+'" onclick=>删除</a>' +
+			'<br/>'
+			;
+			$(".req-body").append(req_row);
 		});
 		
 		// 添加返回字段
 		var rc2 = 0;
 		$("#add_rsp_btn").click(function() {
 			rc2++;
-			$(".rsp-body").append('<span style="margin-left:5px;">'+rc2+'</span>');
-			$(".rsp-body").append('<input type="text" style="display:none;" id="rsp_f_key_'+ rc2 + '" name="rsp_f_key_'+ rc2 + '">');
-			$(".rsp-body").append('<input type="text" style="display:none;" id="rsp_f_value_'+ rc2 + '" name="rsp_f_value_'+ rc2 + '">');
-			$(".rsp-body").append('<input type="text" style="display:none;" id="rsp_f_type_'+ rc2 + '" name="rsp_f_type_'+ rc2 + '">');
-			$(".rsp-body").append('<span style="margin-left:5px;">类型:</span>');
-			$(".rsp-body").append('<input style="width:100px;" name="rsp_f_type_show_'+rc2+'" type="text" value="" id="rsp_f_type_show_'+ rc2 + '" onfocus="focus_edit_rsp('+rc2+')" data-toggle="modal" data-target="#exampleModal"/>');
-			$(".rsp-body").append('<span style="margin-left:5px;">变量名:</span>');
-			$(".rsp-body").append('<input style="width:150px;" name="rsp_f_name_'+rc2+'" type="text" value="" id="rsp_f_name_'+rc2+'"/>');
-			$(".rsp-body").append('<span style="margin-left:5px;">描述:</span>');
-			$(".rsp-body").append('<input id="rsp_f_desc_'+rc2+'" name="rsp_f_desc_'+rc2+'" type="text" value="" />');
-			$(".rsp-body").append('<a href="javascript:;" style="margin-left:10px;" id="rsp_f_def_'+rc2+'">删除</a>');
-			$(".rsp-body").append('<br/>');
+			var rsp_row = '<span style="margin-left:5px;">'+rc2+'</span>' + 
+			'<span style="margin-left:5px;">类型:</span>' +
+			'<select name="rsp_f_type_'+rc2+'" id="rsp_f_type_'+rc2+'" style="width:120px;">' +
+			'<option value="base">base</option>' + 
+			'<option value="array&lt;v&gt;">array&lt;v&gt;</option>' +
+			'<option value="map&lt;int32,v&gt;">map&lt;int32,v&gt;</option>' +
+			'<option value="map&lt;int64,v&gt;">map&lt;int64,v&gt;</option>' +
+			'<option value="map&lt;string,v&gt;">map&lt;string,v&gt;</option>' +
+			'</select>'+
+			'<select name="rsp_f_value_'+rc2+'" id="rsp_f_value_'+rc2+'" style="width:100px;">' +
+			'<c:forEach items="${CacheMgr.getInstance().getStructs()}" var="struct">' +
+			'<option value="${struct}">${struct}</option>' +
+			'</c:forEach>' +
+			'</select>'+
+			'<span style="margin-left:5px;">变量名:</span>' +
+			'<input style="width:100px;" name="rsp_f_name_'+rc2+'" type="text" value="" id="rsp_f_name_'+rc2+'" />' +
+			'<span style="margin-left:5px;">描述:</span>' +
+			'<input id="rsp_f_desc_'+rc2+'" name="rsp_f_desc_'+rc2+'" type="text" value="" />' + 
+			'<a href="javascript:;" style="margin-left:10px;" id="rsp_f_def_'+rc2+'" onclick=>删除</a>' +
+			'<br/>';
+			$(".rsp-body").append(rsp_row);
 		});
 		
 		/** 消息号输入框改变事件  **/
@@ -200,7 +219,7 @@
 							<button class="btn btn-outline-secondary" type="button">消息归类</button>
 						</div>
 						<select name="msg_cat" class="custom-select" id="inputGroupSelect03">
-							<c:forEach items="${CacheMgr.getInstance().getMsgCats().values()}" var="cat">
+							<c:forEach items="${CacheMgr.getInstance().getMsgCats(1)}" var="cat">
 								<option value="${cat.msg_cat_id}">${cat.msg_cat}</option>
 							</c:forEach>
 						</select>
@@ -269,61 +288,12 @@
 			<div class="row">
 				<table class="table">
 					<tbody class="rsp-body">
-
 					</tbody>
 				</table>
 			</div>
 		</form>
 	</div>
 	
-	<!-- 编辑模态框 -->
-	<div class="bd-example">
-		<div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h4 class="modal-title" id="exampleModalLabel">编辑</h4>
-					</div>
-					<div class="modal-body">
-						<form>
-							<div class="form-group">
-								<label for="recipient-name" class="control-label" style="display: block;">类型:</label> 
-								<select name="edit_field_type" class="custom-select" id="edit_field_type" style="width: 140px;">
-									<option value="base">base</option>
-									<option value="array">array&lt;V&gt;</option>
-									<option value="map">map&lt;K,V&gt;</option>
-								</select>
-								<select name="edit_field_key" class="custom-select" id="edit_field_key" style="width: 140px;">
-									<option value="int8">int8</option>
-									<option value="int16">int16</option>
-									<option value="int32">int32</option>
-									<option value="int64">int64</option>
-									<option value="string">string</option>
-								</select> 
-								<select name="edit_field_value" class="custom-select" id="edit_field_value" style="width: 140px;">
-									<option value="int8">int8</option>
-									<option value="int16">int16</option>
-									<option value="int32">int32</option>
-									<option value="int64">int64</option>
-									<option value="string">string</option>
-								</select>
-							</div>
-							<div class="form-group">
-								<label for="recipient-name" class="control-label">变量名:</label> <input type="text" class="form-control" id="edit_field_name">
-							</div>
-							<div class="form-group">
-								<label for="message-text" class="control-label">说明:</label> <input type="text" class="form-control" id="edit_field_desc">
-							</div>
-						</form>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-						<button type="button" class="btn btn-primary" data-dismiss="modal" id="edit_f_ok">修改并关闭</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 
 </body>
 </html>

@@ -11,6 +11,8 @@ import com.msg.bean.MsgField;
 import com.msg.mgr.MsgMgr;
 import com.msg.util.HttpHelpler;
 import com.msg.util.IdHelper;
+import com.msg.util.LangUtil;
+import com.msg.util.LogUtil;
 
 /**
  * 添加修改消息
@@ -33,6 +35,8 @@ public class UpdateMessageServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		LogUtil.info("提交消息--------------------------------------");
+		
 		int reqFieldCount = (int) request.getParameterMap().keySet().stream().filter(k -> k.startsWith("req_f_name")).count();
 		int rspFieldCount = (int) request.getParameterMap().keySet().stream().filter(k -> k.startsWith("rsp_f_name")).count();
 		String reqId = HttpHelpler.getParameter(request, "req_id");
@@ -59,6 +63,15 @@ public class UpdateMessageServlet extends HttpServlet {
 			MsgField msgField = new MsgField();
 			String rft = HttpHelpler.getParameter(request, "req_f_type_" + i);
 			String rfk = HttpHelpler.getParameter(request, "req_f_key_" + i);
+			if (rft.startsWith("base")) {
+				rft = "base";
+			}
+			if (rft.startsWith("array")) {
+				rft = "array";
+			} else if (rft.startsWith("map")) {
+				rfk = LangUtil.getMapKey(rft);
+				rft = "map";
+			}
 			String rfv = HttpHelpler.getParameter(request, "req_f_value_" + i);
 			String rfn = HttpHelpler.getParameter(request, "req_f_name_" + i);
 			String rfd = HttpHelpler.getParameter(request, "req_f_desc_" + i);
@@ -78,6 +91,15 @@ public class UpdateMessageServlet extends HttpServlet {
 			MsgField msgField = new MsgField();
 			String rft = HttpHelpler.getParameter(request, "rsp_f_type_" + i);
 			String rfk = HttpHelpler.getParameter(request, "rsp_f_key_" + i);
+			if (rft.startsWith("base")) {
+				rft = "base";
+			}
+			if (rft.startsWith("array")) {
+				rft = "array";
+			} else if (rft.startsWith("map")) {
+				rfk = LangUtil.getMapKey(rft);
+				rft = "map";
+			}
 			String rfv = HttpHelpler.getParameter(request, "rsp_f_value_" + i);
 			String rfn = HttpHelpler.getParameter(request, "rsp_f_name_" + i);
 			String rfd = HttpHelpler.getParameter(request, "rsp_f_desc_" + i);

@@ -265,6 +265,7 @@ public class MsgMgr {
 		collect.forEach(v -> delMsg(v.getMsg_id()));
 		DBMgr.getInstance().delCat(catId);
 		MsgCat remove = CacheMgr.getInstance().getMsgCats().remove(catId);
+		CacheMgr.getInstance().getMsgCatNames().entrySet().removeIf(e -> e.getValue() == catId);
 		if (remove != null) {
 			LogUtil.info("删除类别:" + remove.getMsg_cat() + " 成功!");
 		}

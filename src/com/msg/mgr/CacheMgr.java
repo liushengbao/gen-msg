@@ -96,6 +96,8 @@ public class CacheMgr {
 	public Collection<String> getStructs() {
 		List<String> list = new ArrayList<>();
 		list.addAll(basicTypes);
+		List<MsgDef> collect = msgDefs.values().stream().filter(v -> MsgMgr.getInstance().getMsgCatType(v) == MsgCat.CAT_STRUCT).collect(Collectors.toList());
+		collect.forEach(v -> list.add(v.getMsg_name()));
 		return list;
 	}
 }
