@@ -8,19 +8,22 @@ import com.msg.bean.MsgDef;
 import com.msg.mgr.CacheMgr;
 
 public class MsgItem {
-	
+
 	private int msg_id;
 	private int msg_cat;
 	private int req_id;
 	private int rsp_id;
+	private int msg_cat_type;
+	private String msg_name;
 	private String msg_desc;
 	private String msg_note;
 	private String msg_cat_name;
 	private List<MsgFieldItem> reqFields = new ArrayList<>();
 	private List<MsgFieldItem> rspFields = new ArrayList<>();
-	
+
 	public static MsgItem valueOf(MsgDef msgDef) {
 		MsgItem item = new MsgItem();
+		item.setMsg_name(msgDef.getMsg_name());
 		item.setMsg_cat(msgDef.getMsg_cat());
 		item.setMsg_desc(msgDef.getMsg_desc());
 		item.setMsg_id(msgDef.getMsg_id());
@@ -30,6 +33,7 @@ public class MsgItem {
 		MsgCat msgCat = CacheMgr.getInstance().getMsgCats().get(item.getMsg_cat());
 		if (msgCat != null) {
 			item.setMsg_cat_name(msgCat.getMsg_cat());
+			item.setMsg_cat_type(msgCat.getMsg_cat_type());
 		}
 		msgDef.getReqBodys().forEach(v -> {
 			item.getReqFields().add(MsgFieldItem.valueOf(v));
@@ -39,8 +43,7 @@ public class MsgItem {
 		});
 		return item;
 	}
-	
-	
+
 	public List<MsgFieldItem> getReqFields() {
 		return reqFields;
 	}
@@ -52,11 +55,11 @@ public class MsgItem {
 	public List<MsgFieldItem> getRspFields() {
 		return rspFields;
 	}
-	
+
 	public void setRspFields(List<MsgFieldItem> rspFields) {
 		this.rspFields = rspFields;
 	}
-	
+
 	public int getMsg_id() {
 		return msg_id;
 	}
@@ -112,5 +115,25 @@ public class MsgItem {
 	public void setMsg_cat_name(String msg_cat_name) {
 		this.msg_cat_name = msg_cat_name;
 	}
-	
+
+	public int getMsg_cat_type() {
+		return msg_cat_type;
+	}
+
+	public void setMsg_cat_type(int msg_cat_type) {
+		this.msg_cat_type = msg_cat_type;
+	}
+
+	public boolean isStruct() {
+		return msg_cat_type == MsgCat.CAT_STRUCT;
+	}
+
+	public String getMsg_name() {
+		return msg_name;
+	}
+
+	public void setMsg_name(String msg_name) {
+		this.msg_name = msg_name;
+	}
+
 }

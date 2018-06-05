@@ -51,14 +51,25 @@
 		 	</tbody>
 			<tbody>
 				<tr>
-					<td>消息描述:${msgItem.msg_desc}</td>
-					<td>消息归类:${msgItem.msg_cat_name}</td>
+				<c:if test= "${msgItem.msg_cat_type == 1}">
+				<td>消息描述:${msgItem.msg_desc}</td>
+				<td>消息归类:${msgItem.msg_cat_name}</td>
+				</c:if>
+				<c:if test= "${msgItem.msg_cat_type == 2}">
+				<td>结构体描述:${msgItem.msg_desc}</td>
+				<td>消息归类:${msgItem.msg_cat_name}</td>
+				</c:if>	
 				</tr>
 			</tbody>
 			<tbody>
 				<tr>
-					<td>请求消息号:${msgItem.req_id}</td>
-					<td>返回:${msgItem.rsp_id}</td>
+					<c:if test= "${msgItem.msg_cat_type == 1}">
+						<td>请求消息号:${msgItem.req_id}</td>
+						<td>返回:${msgItem.rsp_id}</td>
+					</c:if>
+					<c:if test= "${msgItem.msg_cat_type == 2}">
+						<td>结构体名:${msgItem.msg_name}</td>
+					</c:if>	
 				</tr>
 		    </tbody>
 		    <tbody>
@@ -93,28 +104,31 @@
 			</c:forEach>
 		    </tbody>
 		    
-		    <tbody>
-		    <tr style="height:24px;line-height:24px;background-color:#F1F1F1;">
-			        <td colspan="4" style="color:#777;padding:2px;">返回消息体：</td>
-			 </tr>
-	     	<c:forEach items="${msgItem.rspFields}" var="field">
-	     		<tr>
-	     			<td>${field.id}
-	     			<c:if test="${field.ft == 'base'}">
-	     			<label>类型:</label>${field.fv}
-	     			</c:if>
-	     			<c:if test="${field.ft == 'array'}">
-	     			<label>类型:</label>array&lt;${field.fv}&gt;
-	     			</c:if>
-	     			<c:if test="${field.ft == 'map'}">
-	     			<label>类型:</label>map&lt;${field.fk},${field.fv}&gt;
-	     			</c:if>
-	     			</td>
-					<td><label>变量名:</label>${field.fn}</td>
-					<td><label>描述:</label>${field.desc}</td>
-				</tr>
-			</c:forEach>
-		    </tbody>
+		    <c:if test= "${msgItem.msg_cat_type == 1}">
+			    <tbody>
+				    <tr style="height:24px;line-height:24px;background-color:#F1F1F1;">
+					        <td colspan="4" style="color:#777;padding:2px;">返回消息体：</td>
+					 </tr>
+			     	<c:forEach items="${msgItem.rspFields}" var="field">
+			     		<tr>
+			     			<td>${field.id}
+			     			<c:if test="${field.ft == 'base'}">
+			     			<label>类型:</label>${field.fv}
+			     			</c:if>
+			     			<c:if test="${field.ft == 'array'}">
+			     			<label>类型:</label>array&lt;${field.fv}&gt;
+			     			</c:if>
+			     			<c:if test="${field.ft == 'map'}">
+			     			<label>类型:</label>map&lt;${field.fk},${field.fv}&gt;
+			     			</c:if>
+			     			</td>
+							<td><label>变量名:</label>${field.fn}</td>
+							<td><label>描述:</label>${field.desc}</td>
+						</tr>
+					</c:forEach>
+			    </tbody>
+			</c:if>
+		   
 		   
 		</table>
 	</c:if>

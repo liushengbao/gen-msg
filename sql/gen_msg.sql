@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50626
 File Encoding         : 65001
 
-Date: 2018-04-19 11:40:13
+Date: 2018-06-05 19:33:30
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -33,12 +33,12 @@ DROP TABLE IF EXISTS `msg_info`;
 CREATE TABLE `msg_info` (
   `msg_id` int(10) NOT NULL,
   `msg_cat` int(20) DEFAULT NULL,
+  `msg_name` varchar(50) DEFAULT NULL,
   `msg_desc` text,
   `req_id` int(10) NOT NULL,
   `req_body` text,
   `rsp_id` int(10) DEFAULT NULL,
   `rsp_body` text,
   `msg_note` text,
-  PRIMARY KEY (`msg_id`),
-  UNIQUE KEY `req_id_key` (`req_id`) USING BTREE
+  PRIMARY KEY (`msg_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

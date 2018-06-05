@@ -54,8 +54,6 @@
 			var _index = $(this).index();
 			//让内容框的第 _index 个显示出来，其他的被隐藏
 			$(".tab-box>div").eq(_index).show().siblings().hide();
-			//改变选中时候的选项框的样式，移除其他几个选项的样式
-			$(this).addClass("change").siblings().removeClass("change");
 		});
 	});
 </script>
@@ -68,8 +66,20 @@
 			</ul>
 		</div>
 		<div class="tab-box">
-			<div>123</div>
-			<div>456</div>
+			<div>
+				<ul>
+					<li>消息号1</li>
+					<li>消息号2</li>
+					<li>消息号3</li>
+				</ul>
+			</div>
+			<div>
+				<ul>
+					<li>错误号1</li>
+					<li>错误号2</li>
+					<li>错误号3</li>
+				</ul>
+			</div>
 		</div>
 	</div>
 </body>

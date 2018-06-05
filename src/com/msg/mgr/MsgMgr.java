@@ -153,6 +153,14 @@ public class MsgMgr {
 		}
 	}
 
+	public int getMsgCatType(MsgDef def) {
+		MsgCat msgCat = CacheMgr.getInstance().getMsgCats().get(def.getMsg_cat());
+		if (msgCat != null) {
+			return msgCat.getMsg_cat_type();
+		}
+		return 0;
+	}
+
 	/** 获取客户端显示的类别 **/
 	public List<MsgCatItem> getCatItems() {
 		List<MsgCatItem> collect = CacheMgr.getInstance().getMsgCats().values().stream().map(v -> MsgCatItem.valueOf(v)).collect(Collectors.toList());
@@ -163,7 +171,11 @@ public class MsgMgr {
 				if (msgDef.getMsg_cat() == item.getMsg_cat_id()) {
 					item.getItems().add(MsgItem.valueOf(msgDef));
 					if (!firstName) {
-						item.setFirstMsgName(String.valueOf(msgDef.getReq_id()));
+						if (getMsgCatType(msgDef) == MsgCat.CAT_STRUCT) {
+							item.setFirstMsgName(msgDef.getMsg_name());
+						} else {
+							item.setFirstMsgName(String.valueOf(msgDef.getReq_id()));
+						}
 						firstName = true;
 					}
 				}

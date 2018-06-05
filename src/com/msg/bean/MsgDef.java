@@ -14,6 +14,7 @@ public class MsgDef {
 	private int msg_cat;
 	private int req_id;
 	private int rsp_id;
+	private String msg_name;
 	private String msg_desc;
 	private String req_body;
 	private String rsp_body;
@@ -119,5 +120,13 @@ public class MsgDef {
 	
 	public int getModifyStatu() {
 		return modifyStatu;
+	}
+	
+	public void setMsg_name(String msg_name) {
+		this.msg_name = msg_name;
+	}
+	
+	public String getMsg_name() {
+		return msg_name;
 	}
 }

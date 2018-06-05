@@ -19,6 +19,11 @@
 		$("#msg_edit").load("add_cat.jsp");
 	}
 	
+	/* 添加结构体    */
+	function add_struct() {
+		$("#msg_edit").load("add_struct.jsp");
+	}
+	
 	/* 编辑消息  */
 	function edit_msg($req_id) {
 		$("#msg_edit").load("edit_message.jsp", {req_id:$req_id});
@@ -104,7 +109,7 @@ p {
 		<p class="text-muted" style="display: inline;">消息号管理</p>
 		<a href="javascript:;" onclick="add_cat()" style="margin-left: 5px">添加分类</a> 
 		<a href="javascript:;" onclick="add_msg()" style="margin-left: 5px">添加消息号</a>
-		<a href="javascript:;" onclick="" style="margin-left: 5px">添加结构体</a>
+		<a href="javascript:;" onclick="add_struct()" style="margin-left: 5px">添加结构体</a>
 		<a href="javascript:;" onclick="" style="margin-left: 5px">添加广播</a>
 		<a href="javascript:;" onclick="" style="margin-left: 5px">提交协议</a>
 	</div>

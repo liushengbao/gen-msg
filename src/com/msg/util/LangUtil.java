@@ -36,4 +36,9 @@ public class LangUtil {
 	public static String toJavaPack(String ft) {
 		return javaPackAlias.getOrDefault(ft, ft);
 	}
+	
+	public static String getMapKey(String xx) {
+		return xx.substring(xx.indexOf("<") + 1, xx.indexOf(","));
+	}
+	
 }

@@ -1,6 +1,11 @@
 package com.msg.mgr;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
+
 import com.msg.bean.MsgCat;
 import com.msg.bean.MsgDef;
 import com.msg.util.IdHelper;
@@ -12,6 +17,16 @@ import com.msg.util.LogUtil;
  *
  */
 public class CacheMgr {
+	
+	/** 基础类型 **/
+	private static List<String> basicTypes = new ArrayList<>(); 
+	static {
+		basicTypes.add("int8");
+		basicTypes.add("int16");
+		basicTypes.add("int32");
+		basicTypes.add("int64");
+		basicTypes.add("string");
+	}
 	
 	private static final CacheMgr instance = new CacheMgr();
 
@@ -66,6 +81,10 @@ public class CacheMgr {
 		return msgCats;
 	}
 	
+	public Collection<MsgCat> getMsgCats(final int type) {
+		return msgCats.values().stream().filter(v -> v.getMsg_cat_type() == type).collect(Collectors.toList());
+	}
+	
 	public ConcurrentHashMap<String, Integer> getMsgCatNames() {
 		return msgCatNames;
 	}
@@ -74,4 +93,9 @@ public class CacheMgr {
 		return delMsgDefs;
 	}
 	
+	public Collection<String> getStructs() {
+		List<String> list = new ArrayList<>();
+		list.addAll(basicTypes);
+		return list;
+	}
 }
