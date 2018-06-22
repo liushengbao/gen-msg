@@ -4,10 +4,10 @@ import com.msg.bean.MsgField;
 import com.msg.mgr.MsgMgr;
 
 /**
-  * @author shengbao.Liu
-  * @date 2018年4月18日 下午9:02:40
-  * 
-  */
+ * @author shengbao.Liu
+ * @date 2018年4月18日 下午9:02:40
+ * 
+ */
 public class MsgFieldItem {
 	/** 字段排序id **/
 	private int id;
@@ -17,7 +17,8 @@ public class MsgFieldItem {
 	private String ft;
 	private String fk;
 	private String fv;
-	private String fs;
+	/** **/
+	private String show_msg_ft;
 	/** 字段名称 **/
 	private String fn;
 
@@ -52,7 +53,7 @@ public class MsgFieldItem {
 	public void setFn(String fn) {
 		this.fn = fn;
 	}
-	
+
 	public String getFk() {
 		return fk;
 	}
@@ -69,24 +70,43 @@ public class MsgFieldItem {
 		this.fv = fv;
 	}
 
-	public String getFs() {
-		return fs;
+	public String getShow_msg_ft() {
+		return show_msg_ft;
 	}
 
-	public void setFs(String fs) {
-		this.fs = fs;
+	public void setShow_msg_ft(String show_msg_ft) {
+		this.show_msg_ft = show_msg_ft;
 	}
-	
+
 	public static MsgFieldItem valueOf(MsgField v) {
-		MsgFieldItem item  = new MsgFieldItem();
+		MsgFieldItem item = new MsgFieldItem();
 		item.setId(v.getId());
-		item.setFt(v.getFt());
+		item.setFt(item.toFt(v.getFt(), v.getFk(), v.getFv()));
 		item.setFk(v.getFk());
 		item.setFv(v.getFv());
 		item.setFn(v.getFn());
 		item.setDesc(v.getDesc());
-		item.setFs(MsgMgr.getInstance().getFieldTypeShowStr(v));
+		item.setShow_msg_ft(item.toShowMsgFt(v.getFt(), v.getFk(), v.getFv()));
 		return item;
 	}
-	
+
+	public String toFt(String ft, String fk, String fv) {
+		if (ft.equals("array")) {
+			return "array&ltv&gt";
+		} else if (ft.equals("map")) {
+			return "map&lt" + fv + ",v&gt";
+		}
+		return "base";
+	}
+
+	public String toShowMsgFt(String ft, String fk, String fv) {
+		//map&lt;int64,v&gt;
+		if (ft.equals("array")) {
+			return "array&lt" + fv + "&gt";
+		} else if (ft.equals("map")) {
+			return "map&lt;" + fk + "," + fv + "&gt";
+		}
+		return fv;
+	}
+
 }

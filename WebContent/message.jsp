@@ -24,9 +24,24 @@
 		$("#msg_edit").load("add_struct.jsp");
 	}
 	
+	/* 添加结构体    */
+	function add_gb() {
+		$("#msg_edit").load("add_gb.jsp");
+	}
+	
 	/* 编辑消息  */
 	function edit_msg($req_id) {
 		$("#msg_edit").load("edit_message.jsp", {req_id:$req_id});
+	}
+	
+	/* 编辑结构体  */
+	function edit_struct($req_id) {
+		$("#msg_edit").load("edit_struct.jsp", {req_id:$req_id});
+	}
+	
+	/* 编辑广播  */
+	function edit_gb($req_id) {
+		$("#msg_edit").load("edit_gb.jsp", {req_id:$req_id});
 	}
 	
 	/** 显示消息 **/
@@ -110,7 +125,7 @@ p {
 		<a href="javascript:;" onclick="add_cat()" style="margin-left: 5px">添加分类</a> 
 		<a href="javascript:;" onclick="add_msg()" style="margin-left: 5px">添加消息号</a>
 		<a href="javascript:;" onclick="add_struct()" style="margin-left: 5px">添加结构体</a>
-		<a href="javascript:;" onclick="" style="margin-left: 5px">添加广播</a>
+		<a href="javascript:;" onclick="add_gb()" style="margin-left: 5px">添加广播</a>
 		<a href="javascript:;" onclick="" style="margin-left: 5px">提交协议</a>
 	</div>
 	

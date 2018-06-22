@@ -58,6 +58,10 @@
 				<c:if test= "${msgItem.msg_cat_type == 2}">
 				<td>结构体描述:${msgItem.msg_desc}</td>
 				<td>消息归类:${msgItem.msg_cat_name}</td>
+				</c:if>
+				<c:if test= "${msgItem.msg_cat_type == 3}">
+				<td>广播描述:${msgItem.msg_desc}</td>
+				<td>消息归类:${msgItem.msg_cat_name}</td>
 				</c:if>	
 				</tr>
 			</tbody>
@@ -69,7 +73,10 @@
 					</c:if>
 					<c:if test= "${msgItem.msg_cat_type == 2}">
 						<td>结构体名:${msgItem.msg_name}</td>
-					</c:if>	
+					</c:if>
+					<c:if test= "${msgItem.msg_cat_type == 3}">
+						<td>广播消息号:${msgItem.req_id}</td>
+					</c:if>
 				</tr>
 		    </tbody>
 		    <tbody>
@@ -85,22 +92,13 @@
 			        <td colspan="4" style="color:#777;padding:2px;">请求消息体：</td>
 			 </tr>
 	     	<c:forEach items="${msgItem.reqFields}" var="field">
-	     		
-	     		<tr>
-	     			<td>${field.id}
-	     			<c:if test="${field.ft == 'base'}">
-	     			<label>类型:</label>${field.fv}
-	     			</c:if>
-	     			<c:if test="${field.ft == 'array'}">
-	     			<label>类型:</label>array&lt;${field.fv}&gt;
-	     			</c:if>
-	     			<c:if test="${field.ft == 'map'}">
-	     			<label>类型:</label>map&lt;${field.fk},${field.fv}&gt;
-	     			</c:if>
-	     			</td>
-					<td><label>变量名:</label>${field.fn}</td>
-					<td><label>描述:</label>${field.desc}</td>
-				</tr>
+	     				<tr>
+			     			<td>${field.id}
+			     			<label>类型:</label>${field.show_msg_ft}
+			     			</td>
+							<td><label>变量名:</label>${field.fn}</td>
+							<td><label>描述:</label>${field.desc}</td>
+						</tr>
 			</c:forEach>
 		    </tbody>
 		    
@@ -112,15 +110,7 @@
 			     	<c:forEach items="${msgItem.rspFields}" var="field">
 			     		<tr>
 			     			<td>${field.id}
-			     			<c:if test="${field.ft == 'base'}">
-			     			<label>类型:</label>${field.fv}
-			     			</c:if>
-			     			<c:if test="${field.ft == 'array'}">
-			     			<label>类型:</label>array&lt;${field.fv}&gt;
-			     			</c:if>
-			     			<c:if test="${field.ft == 'map'}">
-			     			<label>类型:</label>map&lt;${field.fk},${field.fv}&gt;
-			     			</c:if>
+			     			<label>类型:</label>${field.show_msg_ft}
 			     			</td>
 							<td><label>变量名:</label>${field.fn}</td>
 							<td><label>描述:</label>${field.desc}</td>

@@ -39,7 +39,7 @@ public class SvnUtil {
 		ISVNAuthenticationManager isvnAuthenticationManager = SVNWCUtil.createDefaultAuthenticationManager(ConfigHelper.getCfgVal("svn.user"), ConfigHelper.getCfgVal("svn.pwd").toCharArray());
 		// 4.创建SVNClientManager的实例
 		svnClientManager = SVNClientManager.newInstance(isvnOptions, isvnAuthenticationManager);
-
+		
 		if (!isChecked(ConfigHelper.getCfgVal("gen.java.path"))) {
 			LogUtil.info(ConfigHelper.getCfgVal("gen.java.path") + " 尚未检出!");
 			checkOut(ConfigHelper.getCfgVal("svn.url"), ConfigHelper.getCfgVal("gen.java.path"));

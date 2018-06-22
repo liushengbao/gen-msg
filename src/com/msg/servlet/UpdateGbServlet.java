@@ -11,23 +11,22 @@ import com.msg.bean.MsgField;
 import com.msg.mgr.MsgMgr;
 import com.msg.util.HttpHelpler;
 import com.msg.util.IdHelper;
-import com.msg.util.JsonHelper;
 import com.msg.util.LangUtil;
 import com.msg.util.LogUtil;
 
 /**
- * 更新结构体
+ * 添加修改消息
  * 
  * @author shengbao.Liu
  */
 @SuppressWarnings("serial")
-@WebServlet("/update_struct")
-public class UpdateStructServlet extends HttpServlet {
+@WebServlet("/update_gb")
+public class UpdateGbServlet extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public UpdateStructServlet() {
+	public UpdateGbServlet() {
 		super();
 	}
 
@@ -36,9 +35,14 @@ public class UpdateStructServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		LogUtil.info("提交结构体--------------------------------------");
-		
+		LogUtil.info("提交广播消息--------------------------------------");
 		int reqFieldCount = (int) request.getParameterMap().keySet().stream().filter(k -> k.startsWith("req_f_name")).count();
+		String reqId = HttpHelpler.getParameter(request, "req_id");
+		if (reqId == "") {
+			return;
+		}
+		
+		
 		MsgDef msgDef = new MsgDef();
 		Integer msgId = Integer.valueOf(HttpHelpler.getParameterOrDefault(request, "msg_id", "0"));
 		if (msgId > 0) {
@@ -50,10 +54,8 @@ public class UpdateStructServlet extends HttpServlet {
 		}
 		//消息分类
 		msgDef.setMsg_cat(Integer.valueOf(HttpHelpler.getParameter(request, "msg_cat")));
-		//结构体名
-		msgDef.setMsg_name(HttpHelpler.getParameterOrDefault(request, "struct_name", "0"));
 		// 请求
-		msgDef.setReq_id(0);
+		msgDef.setReq_id(Integer.valueOf(reqId));
 		msgDef.setMsg_desc(HttpHelpler.getParameter(request, "msg_desc"));
 		for (int i = 1; i <= reqFieldCount; i++) {
 			MsgField msgField = new MsgField();
@@ -65,12 +67,9 @@ public class UpdateStructServlet extends HttpServlet {
 			if (rft.startsWith("array")) {
 				rft = "array";
 			} else if (rft.startsWith("map")) {
-				LogUtil.info("rft:" + rft);
 				rfk = LangUtil.getMapKey(rft);
 				rft = "map";
-				LogUtil.info("rft:" + rft + "rfk:" + rfk);
 			}
-			
 			String rfv = HttpHelpler.getParameter(request, "req_f_value_" + i);
 			String rfn = HttpHelpler.getParameter(request, "req_f_name_" + i);
 			String rfd = HttpHelpler.getParameter(request, "req_f_desc_" + i);
@@ -89,8 +88,6 @@ public class UpdateStructServlet extends HttpServlet {
 		MsgMgr.getInstance().addModifyMsgDef(msgDef);
 		// 由页面点击生成
 		MsgMgr.getInstance().submit();
-		
-		LogUtil.info(JsonHelper.toS(msgDef));//TODO syso
 	}
 
 	/**

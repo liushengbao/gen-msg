@@ -193,7 +193,8 @@ public class MsgMgr {
 		}
 		return null;
 	}
-
+	
+	
 	public String getFieldTypeShowStr(MsgField field) {
 		if (field.getFt().equals("array")) {
 			return field.getFt() + "<" + field.getFv() + ">";
