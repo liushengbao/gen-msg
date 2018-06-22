@@ -295,6 +295,7 @@
 							</select>
 							
 							<select name="req_f_value_${field.id}" id="req_f_value_${field.id}" style="width:100px;"> 
+							<option value= "${field.fv}" selected>${field.fv}</option>
 							<c:forEach items="${CacheMgr.getInstance().getStructs()}" var="struct"> 
 							<option value="${struct}">${struct}</option> 
 							</c:forEach> 
