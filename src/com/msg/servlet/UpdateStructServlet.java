@@ -65,10 +65,8 @@ public class UpdateStructServlet extends HttpServlet {
 			if (rft.startsWith("array")) {
 				rft = "array";
 			} else if (rft.startsWith("map")) {
-				LogUtil.info("rft:" + rft);
 				rfk = LangUtil.getMapKey(rft);
 				rft = "map";
-				LogUtil.info("rft:" + rft + "rfk:" + rfk);
 			}
 			
 			String rfv = HttpHelpler.getParameter(request, "req_f_value_" + i);
