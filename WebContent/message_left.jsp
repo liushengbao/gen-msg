@@ -34,6 +34,10 @@ p {
 	display: inline;
 	color: #000000;
 }
+#c tr {
+	height: 30px;
+	float: left;
+}
 </style>
 </head>
 
@@ -64,54 +68,55 @@ p {
 	});
 </script>
 <body>
-	<div style="overflow: scroll;">
+	<div>
 		<table>
 			<tr>
 				<td style="padding: 5px 0px 3px 0;"><p style="color: #696969; font-size: 14px">游戏:</p></td>
-				<td style="padding: 5px 0px 3px 0;">
-				<select name="game" style="height: 24px;width: 200px;">
-					<option>古剑</option>
-				</select>
-				</td>
+				<td style="padding: 5px 0px 3px 0;"><select name="game" style="height: 24px; width: 200px;">
+						<option>古剑</option>
+				</select></td>
 			</tr>
 			<tr>
 				<td style="padding: 5px 0px 3px 0;"><p style="color: #696969; font-size: 14px">版本:</p></td>
-				<td style="padding: 5px 0px 3px 0;">
-				<select name="version" style="height: 24px;width: 200px;">
-					<option>main</option>
+				<td style="padding: 5px 0px 3px 0;"><select name="version" style="height: 24px; width: 200px;">
+						<option>main</option>
 				</select></td>
 			</tr>
+			<tr>
+				<td style="padding: 5px 0px 3px 0;"><p style="color: #696969; font-size: 14px">搜索:</p></td>
+				<td style="padding: 5px 0px 3px 0;"><input type="text" style="height: 24px; width: 200px;"></td>
+			</tr>
 		</table>
-		<div>
-			<p style="color: #696969; font-size: 14px">搜索:</p>
-			<input type="text" style="margin-left:10px;height: 24px;width: 200px;"> 
-		</div>
-		<table>
+	</div>
+	<!-- style="overflow: scroll;" -->
+	<div id = "c" style="overflow-x: hidden;overflow-y: scroll;width: 360px;height: 300px;">
+		<table style="width:100%;" >
 			<tbody>
 				<tr>
-					<td style="width: 31px; padding: 5px 0px 3px 0;"></td>
-					<td style="padding: 5px 0px 3px 0;"><p style="color: #696969; font-size: 14px">分类名称</p></td>
+					<td style="width: 31px;"></td>
+					<td ><p style="color: #696969; font-size: 14px">分类名称</p></td>
 				</tr>
 			</tbody>
-
+				
+ 
 			<!--显示分类数据-->
-			<c:forEach items="${MsgMgr.getInstance().getCatItems()}" var="cat">
-				<tbody id="group_${cat.msg_cat_id}'">
-					<tr>
-						<td style="width: 31px; padding: 1px 0px 1px 0;"><a href="javascript:;" id="a_${cat.msg_cat_id}" class="msg_show">[+]</a><a href="javascript:;" id="h_${cat.msg_cat_id}" class="msg_hide" style="display: none;">[ - ]</a></td>
-						<td style="width: 287px; padding: 1px 2px 1px 0;"><a href="javascript:;">${cat.msg_cat}</a>--
+		 	<c:forEach items="${MsgMgr.getInstance().getCatItems()}" var="cat">
+				<tbody id="group_${cat.msg_cat_id}" style="">
+					<tr style="">
+						<td style="width: 31px;"><a href="javascript:;" id="a_${cat.msg_cat_id}" class="msg_show">[+]</a><a href="javascript:;" id="h_${cat.msg_cat_id}" class="msg_hide" style="display: none;">[ - ]</a></td>
+						<td style="width: 287px;"><a href="javascript:;">${cat.msg_cat}</a>--
 							<p>${cat.firstMsgName}</p> <a href="javascript:;" onclick="del_cat(${cat.msg_cat_id})">删除</a></td>
 					</tr>
 				</tbody>
 				<tbody id="group_msg_${cat.msg_cat_id}" style="display: none;">
 					<c:forEach items="${cat.items}" var="msg">
 					<tr>
-						<td style="padding: 1px 0px 1px 0;">&nbsp;</td>
+						<td style="">&nbsp;</td>
 							<td>
-							<c:if test="${msg.msg_cat_type == 1}">
+							 <c:if test="${msg.msg_cat_type == 1}">
 								<a style="float: left;" href="javascript:;" onclick="show_msg(${msg.msg_id})">${msg.req_id}--${msg.msg_desc}</a>
 								<a href="javascript:;" onclick="edit_msg(${msg.msg_id})" style="float: left; margin-left: 20px;">编辑</a> <a href="javascript:;" onclick="del_msg(${msg.msg_id})" style="float: left; margin-left: 5px;">删除</a>
-							</c:if>
+							</c:if> 
 							<c:if test="${msg.msg_cat_type == 3}">
 								<a style="float: left;" href="javascript:;" onclick="show_msg(${msg.msg_id})">${msg.req_id}--${msg.msg_desc}</a>
 								<a href="javascript:;" onclick="edit_gb(${msg.msg_id})" style="float: left; margin-left: 20px;">编辑</a> <a href="javascript:;" onclick="del_msg(${msg.msg_id})" style="float: left; margin-left: 5px;">删除</a>
@@ -124,7 +129,7 @@ p {
 					</tr>
 					</c:forEach>
 				</tbody>
-			</c:forEach>
+			</c:forEach>  
 			
 			
 

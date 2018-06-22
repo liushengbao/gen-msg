@@ -131,11 +131,6 @@ p {
 	
 	<table>
 		<tr>
-			<td>
-				
-			</td>
-		<tr>
-		<tr>
 			<!-- 左侧消息栏 -->
 			<td style="height: 100%;width: 360px;">
 				<div style="float: left; width: 360px; height: 100%;">
@@ -143,7 +138,7 @@ p {
 				</div>
 			</td>
 			<!-- 消息显示,消息编辑区域  -->
-			<td>
+			<td style="height: 100%;">
 				<div id="msg_edit" class="msg_edit" style="float: left;height: 100%;margin-top: 5px;"></div>
 			</td>
 		</tr>

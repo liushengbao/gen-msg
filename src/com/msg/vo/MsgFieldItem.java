@@ -1,7 +1,6 @@
 package com.msg.vo;
 
 import com.msg.bean.MsgField;
-import com.msg.mgr.MsgMgr;
 
 /**
  * @author shengbao.Liu
