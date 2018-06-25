@@ -111,7 +111,7 @@ p {
 				<tbody id="group_msg_${cat.msg_cat_id}" style="display: none;">
 					<c:forEach items="${cat.items}" var="msg">
 					<tr>
-						<td style="">&nbsp;</td>
+						<td style="padding-left: 4px;">&nbsp;</td>
 							<td>
 							 <c:if test="${msg.msg_cat_type == 1}">
 								<a style="float: left;" href="javascript:;" onclick="show_msg(${msg.msg_id})">${msg.req_id}--${msg.msg_desc}</a>
